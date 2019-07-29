@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
+#pragma warning disable 0660, 0661
 public static class Utilities
 {
     public static float Map(float value, float minA, float maxA, float minB, float maxB)
