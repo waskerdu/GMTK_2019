@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
+        if(Input.GetButtonDown("Jump") && inGame == false){SlideshowFinished();}
         if(Input.GetButtonUp("Menu") && inGame)
         {
             if (Time.timeScale==0.0f)

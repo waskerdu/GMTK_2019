@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour, IPlayerMessages
 {
@@ -11,11 +12,16 @@ public class Player : MonoBehaviour, IPlayerMessages
     public GameObject turretSystem;
     public GameObject sliderObj;
     public GameObject camObj;
+    public GameObject materialUi;
+    public GameObject integrityUi;
     Slider slider;
     public float minZoom = 1.0f;
     public float maxZoom = 5.0f;
     public float zoomSpeed = 1.0f;
     public float zoom = 0.0f;
+    public float material = 3.0f;
+    public float integrity = 1.0f;
+    public float damageMultiplier = 0.01f;
     Rigidbody2D planetRb;
     Rigidbody2D playerRb;
     Camera cam;
@@ -35,6 +41,7 @@ public class Player : MonoBehaviour, IPlayerMessages
     void Update()
     {
         planetRb.angularVelocity = Input.GetAxisRaw("Horizontal")*spinSpeed*Time.deltaTime;
+        AddResources(1.0f);
         if(Input.GetButtonDown("Jump")){playerRb.velocity=Vector2.up*jumpPower;}
         if(Input.GetButtonDown("Fire1"))
         {
@@ -95,35 +102,21 @@ public class Player : MonoBehaviour, IPlayerMessages
 
     float EaseInOutQuad (float t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
 
-    float Ease(float f)
-    {
-        float flatmin = 0.3f;
-        float flatmax = 0.6f;
-        if (f < flatmin)
-        {
-            //
-        }
-        else if (f < flatmax)
-        {
-            return f;
-        }
-        else
-        {
-            //
-        }
-        return f;
-    }
-
     public void DamagePlanet(float damage)
     {
         //Debug.Log(string.Format("Player: {0} drill damage!", damage));
         //TODO: actually damage planet
+        integrity-=damage*damageMultiplier;
+        integrityUi.GetComponent<TextMeshPro>().SetText((Mathf.Round(integrity*1000)/10).ToString()+"%");
     }
 
     public void AddResources(float resources)
     {
         //Debug.Log(string.Format("Player: {0} resources added!", resources));
         //TODO: actually add resources
+        material+=resources;
+        TextMeshPro textmeshPro = materialUi.GetComponent<TextMeshPro>();
+        textmeshPro.SetText("Material: ");
     }
 }
 
