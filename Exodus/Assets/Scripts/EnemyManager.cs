@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,8 +10,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float spawnDistance = 10f;
     [SerializeField] float minEnemyGroupingDistance = 0.2f;
     [SerializeField] float maxEnemyGroupingDistance = 1.2f;
+    [SerializeField] float warningTime = 0.5f;
 
     [SerializeField] GameObject enemy;
+    [SerializeField] GameObject warning;
+
     [SerializeField] int currentWave;
 
     [Header("Sounds")]
@@ -69,9 +73,11 @@ public class EnemyManager : MonoBehaviour
     {
         var spawnPos = GetNewSpawnPos();
 
+        Warning(spawnPos);
+
         var enemiesThisGroup = Mathf.Min(difficultyConfig.minEnemiesPerGroup + (difficultyConfig.rampSpeedEnemiesPerGroup * currentWave), difficultyConfig.maxEnemiesPerGroup);
 
-        if (Random.Range(0f,1f) <= Mathf.Min(difficultyConfig.minSwarmChance + (difficultyConfig.rampSpeedSwarmChance * currentWave), difficultyConfig.maxSwarmChance) )
+        if (UnityEngine.Random.Range(0f,1f) <= Mathf.Min(difficultyConfig.minSwarmChance + (difficultyConfig.rampSpeedSwarmChance * currentWave), difficultyConfig.maxSwarmChance) )
         {
             var newKing = SpawnSingle();
             newKing.transform.position = spawnPos;
@@ -81,7 +87,7 @@ public class EnemyManager : MonoBehaviour
 
         for (int i = 0; i < enemiesThisGroup; i++)
         {
-            var positionOffset = GetNewSpawnPos().normalized * Random.Range(minEnemyGroupingDistance, maxEnemyGroupingDistance);
+            var positionOffset = GetNewSpawnPos().normalized * UnityEngine.Random.Range(minEnemyGroupingDistance, maxEnemyGroupingDistance);
             var newEnemy = FindFirstInactiveEnemy();
             if (!newEnemy)
             {
@@ -99,6 +105,16 @@ public class EnemyManager : MonoBehaviour
 
 
     }
+
+    private void Warning(Vector3 spawnPos)
+    {
+        WarningSound();
+        var warningPos = spawnPos / 2f;
+        var warningObject = Instantiate(warning, warningPos, Quaternion.LookRotation(Vector3.forward, spawnPos));
+        Destroy(warningObject, warningTime);
+    }
+
+    
 
     GameObject SpawnSingle()
     {
@@ -120,7 +136,7 @@ public class EnemyManager : MonoBehaviour
     {
         var TempObject = new GameObject();
         var SpawnDir = TempObject.transform;
-        SpawnDir.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 364f));
+        SpawnDir.rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 364f));
 
         var SpawnPos = new Vector3();
         SpawnPos = SpawnDir.up * spawnDistance;
@@ -216,6 +232,24 @@ public class EnemyManager : MonoBehaviour
         if (!bigEnemyAttackSound.isPlaying)
         {
             bigEnemyAttackSound.Play();
+
+        }
+    }
+
+    public void SwarmSound()
+    {
+        if (!swarmSound.isPlaying)
+        {
+            swarmSound.Play();
+
+        }
+    }
+
+    public void WarningSound()
+    {
+        if (!warningSound.isPlaying)
+        {
+            warningSound.Play();
 
         }
     }

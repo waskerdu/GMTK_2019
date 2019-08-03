@@ -20,8 +20,8 @@ MonoBehaviour:
   minGroupsPerWave: 1
   maxGroupsPerWave: 1
   rampSpeedGroupsPerWave: 0.5
-  minSwarmChance: 0.203
-  maxSwarmChance: 0.919
+  minSwarmChance: 0.95
+  maxSwarmChance: 1
   rampSpeedSwarmChance: 0.1
   stragglerSpawnRate: 8
   minStragglerSpawnTime: 2
