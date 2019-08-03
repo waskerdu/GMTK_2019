@@ -107,7 +107,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         //Debug.Log(string.Format("Player: {0} drill damage!", damage));
         //TODO: actually damage planet
         integrity-=damage*damageMultiplier;
-        integrityUi.GetComponent<TextMeshPro>().SetText((Mathf.Round(integrity*1000)/10).ToString()+"%");
+        integrityUi.GetComponent<TextMeshProUGUI>().SetText((Mathf.Round(integrity*1000)/10).ToString()+"%");
     }
 
     public void AddResources(float resources)
@@ -115,7 +115,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         //Debug.Log(string.Format("Player: {0} resources added!", resources));
         //TODO: actually add resources
         material+=resources;
-        TextMeshPro textmeshPro = materialUi.GetComponent<TextMeshPro>();
+        TextMeshProUGUI textmeshPro = materialUi.GetComponent<TextMeshProUGUI>();
         textmeshPro.SetText("Material: ");
     }
 }

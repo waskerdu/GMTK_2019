@@ -22,4 +22,10 @@ public class Rocket : Bullet
 
         Deteriorate();
     }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(string.Format("I've triggered on {0}! Dealing {1} damage.", collision.name, damage));
+        TurretManager.Instance.rocketPooler.Push(this);
+    }
 }
