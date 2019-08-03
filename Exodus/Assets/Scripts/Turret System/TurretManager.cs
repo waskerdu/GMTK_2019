@@ -73,7 +73,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
         List<int> biomeTesting = new List<int>();
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < spokes; i++)
         {
             biomeTesting.Add(i % 4);
         }
