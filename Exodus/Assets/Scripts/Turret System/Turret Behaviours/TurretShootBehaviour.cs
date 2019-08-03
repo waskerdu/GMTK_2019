@@ -61,7 +61,7 @@ public class TurretShootBehaviour : TurretBehaviour
                         }
                     }
 
-                    bulletSpawnPoint.right = closest.position - bulletSpawnPoint.position;
+                    bulletSpawnPoint.up = closest.position - bulletSpawnPoint.position;
 
                     Fire();
                 }
