@@ -434,13 +434,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyConfigs:
   - {fileID: 11400000, guid: bc39357213a87274d96664f8fb07bc35, type: 2}
+  - {fileID: 11400000, guid: 01d39182b24e5684c9a69451fcb0ed23, type: 2}
+  - {fileID: 11400000, guid: 2e522d9487d2acc4b9db4b7f6748814b, type: 2}
+  currentWave: 0
+  enemy: {fileID: 6730991358984537902, guid: 5001d806ff7d1244096694a1e0e44714, type: 3}
   spawnDistance: 14
   minEnemyGroupingDistance: 0.2
   maxEnemyGroupingDistance: 1.2
-  warningTime: 0.8
-  enemy: {fileID: 6730991358984537902, guid: 5001d806ff7d1244096694a1e0e44714, type: 3}
   warning: {fileID: 5997450961998949246, guid: 03a5261cbd235bf47a81a247b7fc2759, type: 3}
-  currentWave: 0
+  warningTime: 0.8
   smallEnemyDamageSound: {fileID: 8220554040399605363}
   bigEnemyDamageSound: {fileID: 8220554040319457253}
   smallEnemyDestroySound: {fileID: 8220554040559055332}
