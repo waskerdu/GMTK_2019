@@ -14,7 +14,8 @@ public class Rocket : Bullet
         {
             //rotate towards target
             aimLocation.LookAt(target.position);
-            transform.rotation = Quaternion.Lerp(transform.rotation, aimLocation.rotation, turnSpeed);
+            transform.eulerAngles = new Vector3(0, 0, Mathf.Lerp(transform.rotation.z, aimLocation.rotation.z, turnSpeed));
+            //transform.rotation = Quaternion.Lerp(transform.rotation, aimLocation.rotation, turnSpeed);
         }
 
         transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);

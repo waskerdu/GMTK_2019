@@ -39,6 +39,13 @@ public class TurretShootBehaviour : TurretBehaviour
             bullet = TurretManager.Instance.bulletPooler.Pop();
             bullet.transform.parent = null;
         }
+        else if (bulletType == BulletType.Rocket)
+        {
+            Rocket rocket = TurretManager.Instance.rocketPooler.Pop() as Rocket;
+            rocket.target = GameObject.Find("Damage Test").transform;
+            bullet = rocket;
+            bullet.transform.parent = null;
+        }
         else
         {
             bullet = TurretManager.Instance.laserPooler.Pop();

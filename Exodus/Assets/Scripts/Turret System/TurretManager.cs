@@ -82,10 +82,10 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
         List<int> biomeTesting = new List<int>();
 
-        for (int i = 0; i < spokes; i++)
-        {
-            biomeTesting.Add(2);
-        }
+        biomeTesting.Add(0);
+        biomeTesting.Add(1);
+        biomeTesting.Add(2);
+        biomeTesting.Add(3);
 
         SetBiomeData(biomeTesting.ToArray());
     }
@@ -94,7 +94,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     {
         //Set biome data after we receive the biomes
         for (int i = 0; i < turretPositions.Count; i++)
-            turretPositions[i].biome = biomeList[i];
+            turretPositions[i].biome = biomeList[Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1))];
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
     }
 
