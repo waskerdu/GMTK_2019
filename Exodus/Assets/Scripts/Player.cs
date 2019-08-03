@@ -1,19 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPlayerMessages
 {
     public float spinSpeed = 100.0f;
     public float jumpPower = 10.0f;
     public GameObject turretSystem;
     public GameObject sliderObj;
+    public GameObject camObj;
+    public GameObject materialUi;
+    public GameObject integrityUi;
     Slider slider;
     public float minZoom = 1.0f;
     public float maxZoom = 5.0f;
     public float zoomSpeed = 1.0f;
     public float zoom = 0.0f;
+    public float material = 3.0f;
+    public float integrity = 1.0f;
+    public float damageMultiplier = 0.01f;
     Rigidbody2D planetRb;
     Rigidbody2D playerRb;
     Camera cam;
@@ -25,7 +33,7 @@ public class Player : MonoBehaviour
     {
         playerRb = transform.GetChild(0).GetComponent<Rigidbody2D>();
         planetRb = transform.GetChild(1).GetComponent<Rigidbody2D>();
-        cam = transform.GetChild(2).GetComponent<Camera>();
+        cam = camObj.GetComponent<Camera>();
         slider = sliderObj.GetComponent<Slider>();
     }
 
@@ -56,7 +64,14 @@ public class Player : MonoBehaviour
             {
                 if (ready)
                 {
-                    if(place){turretSystem.SendMessage("PlaceTurret");}
+                    if(place)
+                    {
+                        if (material>=1.0f)
+                        {
+                            turretSystem.SendMessage("PlaceTurret");
+                            material-=1.0f;
+                        }
+                    }
                     else{turretSystem.SendMessage("RemoveTurret");}
                     turretSystem.SendMessage("ShowGhostTurret",false);
                     timer = 0.0f;
@@ -93,22 +108,25 @@ public class Player : MonoBehaviour
 
     float EaseInOutQuad (float t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
 
-    float Ease(float f)
+    public void DamagePlanet(float damage)
     {
-        float flatmin = 0.3f;
-        float flatmax = 0.6f;
-        if (f < flatmin)
-        {
-            //
-        }
-        else if (f < flatmax)
-        {
-            return f;
-        }
-        else
-        {
-            //
-        }
-        return f;
+        //Debug.Log(string.Format("Player: {0} drill damage!", damage));
+        //TODO: actually damage planet
+        integrity-=damage*damageMultiplier;
+        integrityUi.GetComponent<TextMeshProUGUI>().SetText((Mathf.Round(integrity*1000)/10).ToString()+"%");
     }
+
+    public void AddResources(float resources)
+    {
+        //Debug.Log(string.Format("Player: {0} resources added!", resources));
+        //TODO: actually add resources
+        material+=resources;
+        materialUi.GetComponent<TextMeshProUGUI>().SetText("Material: "+(Mathf.Round(material*10)/10).ToString());
+    }
+}
+
+public interface IPlayerMessages : IEventSystemHandler
+{
+    void DamagePlanet(float damage);
+    void AddResources(float resources);
 }

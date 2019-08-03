@@ -21,6 +21,7 @@ public class Turret : MonoBehaviour, ITurretMessages
     [Reorderable]
     public TurretTypeLinks typeLinks;
     public SpriteRenderer boostSprite;
+    public Transform bulletSpawnPoint;
     public float multiplierPerBoost = 0.5f;
     public int boosts;
 
@@ -53,6 +54,7 @@ public class Turret : MonoBehaviour, ITurretMessages
                 {
                     turretBehaviour = Instantiate(link.behaviour);
                     turretBehaviour.turret = this;
+                    turretBehaviour.bulletSpawnPoint = bulletSpawnPoint;
                 }
             }
         }

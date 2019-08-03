@@ -5,6 +5,7 @@ using UnityEngine;
 public class TurretBehaviour : ScriptableObject
 {
     [HideInInspector] public Turret turret;
+    [HideInInspector] public Transform bulletSpawnPoint;
 
     public virtual void Update() { }
 }
