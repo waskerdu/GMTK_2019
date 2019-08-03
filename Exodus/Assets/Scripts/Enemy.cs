@@ -5,27 +5,35 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    enum MovementMode {Wander, Beeline};
+    enum MovementMode {Wander, Beeline, Swarm};
     Vector3 planetPos = new Vector3(0,0,0);
 
     [SerializeField] float health = 3f;
     [SerializeField] float damage = 1f;
     [SerializeField] bool isSwarmKing = false;
-    [SerializeField] bool isSwarmDrone = false;
+    [SerializeField] float kingScale = 1.5f;
+    [SerializeField] float kingDamage = 3f;
+    [SerializeField] float swarmDistance = 5f;
     [Header("Movement")]
     [SerializeField] MovementMode movementMode = MovementMode.Wander;
     [SerializeField] float movementSpeed = 1f;
+    [SerializeField] float kingSpeed = 0.7f;
+    [SerializeField] float swarmSpeed = 1.6f;
     [SerializeField] float rotateSpeed = 1f;
     [SerializeField] float newWanderDirectionTime = 3f;
     [SerializeField] float wanderAccuracyAdjust = 4f;
+    [SerializeField] float beelineDistance = 4f;
     public Vector3 targetDir = new Vector3();
     Rigidbody2D rb;
     float directionChangeTimer = 0f;
+    GameObject swarmKing;
+    Vector3 originalScaling;
     // Start is called before the first frame update
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        originalScaling = transform.localScale;
     }
 
     // Update is called once per frame
@@ -38,8 +46,22 @@ public class Enemy : MonoBehaviour
     {
         movementSpeed *= 1.8f;
         movementMode = MovementMode.Beeline;
-        isSwarmDrone = false;
         isSwarmKing = false;
+    }
+
+    void CheckDistanceToPlanet()
+    {
+        if ((planetPos - transform.position).magnitude < beelineDistance)
+        {
+            movementMode = MovementMode.Beeline;
+        }
+
+        else if ((planetPos - transform.position).magnitude < swarmDistance && isSwarmKing)
+        {
+            GetComponentInChildren<SwarmCall>(true).gameObject.SetActive(true);
+        }
+        
+
     }
 
 
@@ -49,15 +71,28 @@ public class Enemy : MonoBehaviour
         {
             case MovementMode.Wander:
                 ChangeTargetDir();
+                CheckDistanceToPlanet();
                 break;
                 
 
             case MovementMode.Beeline:
                 targetDir = (planetPos - transform.position).normalized;
                 break;
+
+            case MovementMode.Swarm:
+                targetDir = (swarmKing.transform.position - transform.position).normalized;
+                break;
         }
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, targetDir), Time.deltaTime * rotateSpeed);
-        rb.velocity = transform.up * movementSpeed;
+        if (isSwarmKing)
+        {
+            rb.velocity = transform.up * kingSpeed;
+        }
+        else
+        {
+            rb.velocity = transform.up * movementSpeed;
+        }
+        
     }
 
     private void ChangeTargetDir()
@@ -74,22 +109,36 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision entered bruh");
-
+        if (isSwarmKing)
+        {
+            SendMessageUpwards("BigAttackSound");
+            
+            collision.gameObject.SendMessageUpwards("DamagePlanet", kingDamage);
+        }
+        else
+        {
         SendMessageUpwards("SmallAttackSound");
-        collision.gameObject.SendMessage("DamagePlanet", damage);
+            collision.gameObject.SendMessageUpwards("DamagePlanet", damage);
+
+        }
+
+
         Die();
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Trigger entered bruh");
-    }
-
     public void DamageEnemy(float damage)
     {
-        SendMessageUpwards("SmallDamageSound");
+        if (isSwarmKing)
+        {
+            SendMessageUpwards("BigDamageSound");
+
+        }
+        else
+        {
+            SendMessageUpwards("SmallDamageSound");
+
+        }
         health -= damage;
         if (health <= 0)
         {
@@ -99,7 +148,40 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        SendMessageUpwards("SmallDeathSound");
+        if (isSwarmKing)
+        {
+            SendMessageUpwards("BigDeathSound");
+
+        }
+        else
+        {
+            SendMessageUpwards("SmallDeathSound");
+
+        }
+        swarmKing = null;
+        isSwarmKing = false;
+        transform.localScale = originalScaling;
+        movementMode = MovementMode.Wander;
+        GetComponentInChildren<SwarmCall>(true).gameObject.SetActive(false);
         gameObject.SetActive(false);
+    }
+
+    public void Swarm(GameObject king)
+    {
+        if (isSwarmKing || swarmKing != null)
+        {
+            return;
+        }
+
+        swarmKing = king;
+        movementMode = MovementMode.Swarm;
+    }
+
+    public void BecomeKing()
+    {
+        isSwarmKing = true;
+        transform.localScale = new Vector3(kingScale,kingScale,kingScale);
+        
+
     }
 }

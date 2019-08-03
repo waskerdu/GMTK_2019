@@ -8,6 +8,7 @@ using UnityEngine;
 public class DifficultyConfig : ScriptableObject
 {
     [SerializeField] public float timeBetweenWaves;
+    [SerializeField] public float beginningSpawnDelay;
     [Header("Enemies Per Group")]
     [SerializeField] public int minEnemiesPerGroup;
     [SerializeField] public int maxEnemiesPerGroup;

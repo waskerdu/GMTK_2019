@@ -41,7 +41,6 @@ public class Player : MonoBehaviour, IPlayerMessages
     void Update()
     {
         planetRb.angularVelocity = Input.GetAxisRaw("Horizontal")*spinSpeed*Time.deltaTime;
-        AddResources(1.0f);
         if(Input.GetButtonDown("Jump")){playerRb.velocity=Vector2.up*jumpPower;}
         if(Input.GetButtonDown("Fire1"))
         {
@@ -65,7 +64,14 @@ public class Player : MonoBehaviour, IPlayerMessages
             {
                 if (ready)
                 {
-                    if(place){turretSystem.SendMessage("PlaceTurret");}
+                    if(place)
+                    {
+                        if (material>=1.0f)
+                        {
+                            turretSystem.SendMessage("PlaceTurret");
+                            material-=1.0f;
+                        }
+                    }
                     else{turretSystem.SendMessage("RemoveTurret");}
                     turretSystem.SendMessage("ShowGhostTurret",false);
                     timer = 0.0f;
@@ -115,8 +121,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         //Debug.Log(string.Format("Player: {0} resources added!", resources));
         //TODO: actually add resources
         material+=resources;
-        TextMeshProUGUI textmeshPro = materialUi.GetComponent<TextMeshProUGUI>();
-        textmeshPro.SetText("Material: ");
+        materialUi.GetComponent<TextMeshProUGUI>().SetText("Material: "+(Mathf.Round(material*10)/10).ToString());
     }
 }
 

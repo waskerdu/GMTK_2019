@@ -65,13 +65,14 @@ public class GameManager : MonoBehaviour
     void LaunchGame()
     {
         Time.timeScale=1.0f;
+        planet.SetActive(true);
         enemyManager.SetActive(true);
         turretManager.SetActive(true);
         enemyManager.SendMessage("SetDifficulty",difficulty);
         turretManager.SendMessage("SetDifficulty",difficulty);
         HideMenus();
         //mainMenu.SetActive(false);
-        planet.SetActive(true);
+        
         inGame = true;
     }
     void Update()
