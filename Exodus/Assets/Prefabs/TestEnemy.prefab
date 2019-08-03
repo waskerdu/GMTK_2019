@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4137005512708091212}
   - component: {fileID: 683446423708717156}
   - component: {fileID: 574363686506306673}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SwarmCall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,6 +118,7 @@ MonoBehaviour:
   kingSpeed: 3.5
   swarmSpeed: 8
   rotateSpeed: 1
+  swarmRotateSpeed: 1.8
   newWanderDirectionTime: 3
   wanderAccuracyAdjust: 1
   beelineDistance: 40

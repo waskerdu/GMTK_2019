@@ -62,6 +62,40 @@ public class GameManager : MonoBehaviour
     //public void Resume(){pauseMenu.SetActive(false);Time.timeScale=1.0f;}
     public void Resume(){HideMenus();Time.timeScale=1.0f;}
 
+    public void GenerateBiomes()
+    {
+        int numForests = 7;
+        int numDeserts = 5;
+        int numOceans = 5;
+        int numMountains = 3;
+        int i;
+        List<int> tempBiomes = new List<int>();
+        List<int> biomes = new List<int>();
+        for (i = 0; i < numForests; i++)
+        {
+            tempBiomes.Add(0);
+        }
+        for (i = 0; i < numDeserts; i++)
+        {
+            tempBiomes.Add(1);
+        }
+        for (i = 0; i < numOceans; i++)
+        {
+            tempBiomes.Add(2);
+        }
+        for (i = 0; i < numMountains; i++)
+        {
+            tempBiomes.Add(3);
+        }
+        while (tempBiomes.Count>0)
+        {
+            i = Random.Range(0,tempBiomes.Count-1);
+            biomes.Add(tempBiomes[i]);
+            tempBiomes.RemoveAt(i);
+        }
+        turretManager.SendMessage("SetBiomeData",biomes);
+    }
+
     void LaunchGame()
     {
         Time.timeScale=1.0f;
