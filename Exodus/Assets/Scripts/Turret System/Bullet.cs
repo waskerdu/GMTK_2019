@@ -17,10 +17,15 @@ public class Bullet : MonoBehaviour
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), GameObject.Find("Player").GetComponentInChildren<Collider2D>());
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * moveSpeed);
 
+        Deteriorate();
+    }
+
+    protected void Deteriorate()
+    {
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0)
         {
@@ -28,10 +33,12 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(string.Format("I've triggered on {0}! Dealing {1} damage.", collision.name, damage));
-        if (!pierce)
+        if (pierce)
+            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
+        else
             TurretManager.Instance.bulletPooler.Push(this);
     }
 }

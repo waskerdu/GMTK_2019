@@ -32,6 +32,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     public GameObject turretPositionPrefab;
     public ObjectPooler bulletPooler;
     public ObjectPooler laserPooler;
+    public ObjectPooler rocketPooler;
     public Turret turretPrefab;
     public float turretHeightOffset = 0.5f;
     public int spokes = 20;
@@ -46,6 +47,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     {
         bulletPooler.InitializePool();
         laserPooler.InitializePool();
+        rocketPooler.InitializePool();
 
         float theta = 360f / spokes;
         turretPositions = new TurretPositions();
@@ -82,7 +84,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
         for (int i = 0; i < spokes; i++)
         {
-            biomeTesting.Add(0);
+            biomeTesting.Add(2);
         }
 
         SetBiomeData(biomeTesting.ToArray());
@@ -188,7 +190,6 @@ public class TurretPosition
         {
             if (i < turrets.Count - 1)
             {
-                Debug.Log("Boost Turret");
                 turrets[i].SetTurretType(Turret.TurretType.Boost);
             }
             else

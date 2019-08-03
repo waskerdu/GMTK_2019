@@ -8,12 +8,14 @@ public class TurretShootBehaviour : TurretBehaviour
     public enum BulletType
     {
         Bullet,
-        Laser
+        Laser,
+        Rocket
     }
 
     public float fireCoolDown = 0.5f;
     public float bulletDamage = 13.5f;
     public BulletType bulletType;
+    public bool trackTarget;
 
     float timeSinceLastFire = 0;
 
