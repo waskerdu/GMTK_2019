@@ -74,9 +74,17 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Collision entered bruh");
+
         SendMessageUpwards("SmallAttackSound");
         collision.gameObject.SendMessage("DamagePlanet", damage);
         Die();
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Trigger entered bruh");
     }
 
     public void DamageEnemy(float damage)
