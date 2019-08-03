@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8500320827400389595}
   m_Layer: 0
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,3 +110,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageSoak: 50
+  damageToEnemy: 50
+  behaviour: {fileID: 0}

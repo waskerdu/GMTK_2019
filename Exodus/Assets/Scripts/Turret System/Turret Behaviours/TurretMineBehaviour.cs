@@ -7,12 +7,18 @@ public class TurretMineBehaviour : TurretBehaviour
 {
     public float resourcesPerSecond = 1f;
     public float planetDamagePerSecond = 1f;
+    public string soundName = "TurretDrill";
 
     Player player;
 
     private void OnEnable()
     {
         player = FindObjectOfType<Player>();
+    }
+
+    public override void Init()
+    {
+        TurretSoundManager.Instance.PlaySound(soundName);
     }
 
     public override void Update()

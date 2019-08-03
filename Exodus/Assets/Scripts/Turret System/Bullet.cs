@@ -32,6 +32,11 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    public void DamagePlanet(float damage)
+    {
+        //
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Enemy enemy = collision.GetComponent<Enemy>();
