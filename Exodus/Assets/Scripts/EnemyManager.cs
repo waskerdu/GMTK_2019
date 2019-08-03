@@ -35,6 +35,7 @@ public class EnemyManager : MonoBehaviour
     Vector3 planetPos = new Vector3(0,0,0);
     float waveTimer;
     float stragglerTimer;
+    bool gameOver = false;
 
 
     private void Awake()
@@ -47,6 +48,10 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameOver)
+        {
+            return;
+        }
         WaveSpawning();
         StragglerSpawning();
     }
@@ -58,6 +63,8 @@ public class EnemyManager : MonoBehaviour
 
     public void GameWon()
     {
+        gameOver = true;
+
         foreach (var enemy in enemyPool)
         {
             if (!enemy.activeInHierarchy)
@@ -70,6 +77,7 @@ public class EnemyManager : MonoBehaviour
 
     public void GameOver()
     {
+        gameOver = true;
         var enemies = GetComponentsInChildren<Enemy>();
         foreach (var enemy in enemies)
         {
