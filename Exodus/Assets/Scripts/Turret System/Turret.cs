@@ -52,9 +52,11 @@ public class Turret : MonoBehaviour, ITurretMessages
                     turretBehaviour = null;
                 else
                 {
+                    turretBehaviour.Shutdown();
                     turretBehaviour = Instantiate(link.behaviour);
                     turretBehaviour.turret = this;
                     turretBehaviour.bulletSpawnPoint = bulletSpawnPoint;
+                    turretBehaviour.Init();
                 }
             }
         }
@@ -62,7 +64,11 @@ public class Turret : MonoBehaviour, ITurretMessages
         if (turretType == TurretType.Boost)
         {
             boostSprite.gameObject.SetActive(true);
-            turretBehaviour = null;
+            if (turretBehaviour != null)
+            {
+                turretBehaviour.Shutdown();
+                turretBehaviour = null;
+            }
         }
     }
 

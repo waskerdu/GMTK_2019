@@ -8,4 +8,6 @@ public class TurretBehaviour : ScriptableObject
     [HideInInspector] public Transform bulletSpawnPoint;
 
     public virtual void Update() { }
+    public virtual void Init() { }
+    public virtual void Shutdown() { }
 }
