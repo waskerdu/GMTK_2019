@@ -12,6 +12,34 @@ public static class Utilities
         return (value - minA) / (maxA - minA) * (maxB - minB) + minB;
     }
 
+    /// <summary>
+    /// Returns 2D vector coordinates given radius and degrees
+    /// </summary>
+    /// <param name="radius"></param>
+    /// <param name="degrees"></param>
+    /// <returns></returns>
+    public static Vector2 PolarToCartesian(float radius, float degrees)
+    {
+        float theta = Mathf.Deg2Rad * degrees;
+        float x = Mathf.Sin(theta) * radius;
+        float y = Mathf.Cos(theta) * radius;
+        return new Vector2(x, y);
+    }
+
+    /// <summary>
+    /// returns new vector2 where x = radius and y = degrees
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    public static Vector2 CartesianToPolar(float x, float y)
+    {
+        float radius = Mathf.Sqrt(x * x + y * y);
+        float theta = Mathf.Atan(x / y);
+        float degrees = Mathf.Rad2Deg * theta;
+        return new Vector2(radius, degrees);
+    }
+
     #region Vector 2 Serializer
     /// <summary>
     /// Serializes Vector2 data to simple x and y floats for use in data persistence.
