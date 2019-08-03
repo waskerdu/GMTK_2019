@@ -19,11 +19,11 @@ public class TurretMineBehaviour : TurretBehaviour
     {
         if (player == null) return;
 
-        float damage = planetDamagePerSecond * Time.deltaTime;
+        float damage = planetDamagePerSecond * Time.deltaTime * (1 + turret.GetBoostMultiplier());
         if (damage > 0)
             player.SendMessage("DamagePlanet", damage);
 
-        float resources = resourcesPerSecond * Time.deltaTime;
+        float resources = resourcesPerSecond * Time.deltaTime * (1 + turret.GetBoostMultiplier());
         if (resources > 0)
             player.SendMessage("AddResources", resources);
     }
