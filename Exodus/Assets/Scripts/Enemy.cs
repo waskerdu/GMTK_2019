@@ -163,12 +163,12 @@ public class Enemy : MonoBehaviour
         {
             SendMessageUpwards("BigAttackSound");
 
-            collision.gameObject.SendMessageUpwards("DamagePlanet", kingDamage);
+            collision.gameObject.SendMessage("DamagePlanet", kingDamage);
         }
         else
         {
             SendMessageUpwards("SmallAttackSound");
-            collision.gameObject.SendMessageUpwards("DamagePlanet", damage);
+            collision.gameObject.SendMessage("DamagePlanet", damage);
 
         }
     }
