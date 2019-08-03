@@ -1342,16 +1342,6 @@ PrefabInstance:
       propertyPath: planet
       value: 
       objectReference: {fileID: 83282511}
-    - target: {fileID: 3272325701314337035, guid: 9ebbc8d282a5f9940ac0f1df71751707,
-        type: 3}
-      propertyPath: turretHeightOffset
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 3272325701427034513, guid: 9ebbc8d282a5f9940ac0f1df71751707,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.506
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ebbc8d282a5f9940ac0f1df71751707, type: 3}
 --- !u!1 &508326843
@@ -3518,7 +3508,7 @@ GameObject:
   - component: {fileID: 1328113606}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

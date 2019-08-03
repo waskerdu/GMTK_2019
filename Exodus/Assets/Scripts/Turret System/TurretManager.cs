@@ -31,6 +31,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     public GameObject ghostTurret;
     public GameObject turretPositionPrefab;
     public ObjectPooler bulletPooler;
+    public ObjectPooler laserPooler;
     public Turret turretPrefab;
     public float turretHeightOffset = 0.5f;
     public int spokes = 20;
@@ -44,6 +45,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     private void Awake()
     {
         bulletPooler.InitializePool();
+        laserPooler.InitializePool();
 
         float theta = 360f / spokes;
         turretPositions = new TurretPositions();
@@ -262,7 +264,9 @@ public class ObjectPooler
 
         for (int i = 0; i < startingQuantity; i++)
         {
-            pool.Add(GameObject.Instantiate(prefab, parent.transform));
+            Bullet bullet = GameObject.Instantiate(prefab, parent.transform);
+            pool.Add(bullet);
+            bullet.gameObject.SetActive(false);
         }
     }
 

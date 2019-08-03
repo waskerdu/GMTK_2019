@@ -5,8 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Turret Shoot Behaviour", menuName = "Turret/Shoot Behaviour")]
 public class TurretShootBehaviour : TurretBehaviour
 {
+    public enum BulletType
+    {
+        Bullet,
+        Laser
+    }
+
     public float fireCoolDown = 0.5f;
     public float bulletDamage = 13.5f;
+    public BulletType bulletType;
 
     float timeSinceLastFire = 0;
 
@@ -23,10 +30,21 @@ public class TurretShootBehaviour : TurretBehaviour
 
     public void Fire()
     {
-        Bullet bullet = TurretManager.Instance.bulletPooler.Pop();
+        Bullet bullet;
+
+        if (bulletType == BulletType.Bullet)
+        {
+            bullet = TurretManager.Instance.bulletPooler.Pop();
+            bullet.transform.parent = null;
+        }
+        else
+        {
+            bullet = TurretManager.Instance.laserPooler.Pop();
+            bullet.transform.parent = turret.transform;
+        }
+
         bullet.damage = bulletDamage * (1 + turret.GetBoostMultiplier());
-        bullet.transform.parent = null;
-        bullet.transform.position = turret.transform.position;
-        bullet.transform.rotation = turret.transform.rotation;
+        bullet.transform.position = bulletSpawnPoint.position;
+        bullet.transform.rotation = bulletSpawnPoint.rotation;
     }
 }
