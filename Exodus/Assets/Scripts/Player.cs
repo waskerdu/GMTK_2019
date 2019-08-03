@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float jumpPower = 10.0f;
     public GameObject turretSystem;
     public GameObject sliderObj;
+    public GameObject camObj;
     Slider slider;
     public float minZoom = 1.0f;
     public float maxZoom = 5.0f;
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
     {
         playerRb = transform.GetChild(0).GetComponent<Rigidbody2D>();
         planetRb = transform.GetChild(1).GetComponent<Rigidbody2D>();
-        cam = transform.GetChild(2).GetComponent<Camera>();
+        cam = camObj.GetComponent<Camera>();
         slider = sliderObj.GetComponent<Slider>();
     }
 
