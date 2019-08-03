@@ -21,7 +21,7 @@ public class TurretMineBehaviour : TurretBehaviour
 
         float damage = planetDamagePerSecond * Time.deltaTime;
         if (damage > 0)
-            player.SendMessage("Drill", damage);
+            player.SendMessage("DamagePlanet", damage);
 
         float resources = resourcesPerSecond * Time.deltaTime;
         if (resources > 0)

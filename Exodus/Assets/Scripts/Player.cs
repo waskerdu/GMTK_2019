@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPlayerMessages
 {
     public float spinSpeed = 100.0f;
     public float jumpPower = 10.0f;
@@ -111,4 +112,22 @@ public class Player : MonoBehaviour
         }
         return f;
     }
+
+    public void DamagePlanet(float damage)
+    {
+        //Debug.Log(string.Format("Player: {0} drill damage!", damage));
+        //TODO: actually damage planet
+    }
+
+    public void AddResources(float resources)
+    {
+        //Debug.Log(string.Format("Player: {0} resources added!", resources));
+        //TODO: actually add resources
+    }
+}
+
+public interface IPlayerMessages : IEventSystemHandler
+{
+    void DamagePlanet(float damage);
+    void AddResources(float resources);
 }
