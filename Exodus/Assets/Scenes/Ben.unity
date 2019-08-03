@@ -398,50 +398,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8220554040399605363, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
-    - target: {fileID: 8220554040319457253, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
-    - target: {fileID: 8220554040231182420, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
-    - target: {fileID: 8220554040559055332, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
-    - target: {fileID: 8220554040036398893, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
-    - target: {fileID: 8220554039706537402, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
-    - target: {fileID: 8220554039780836477, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
-    - target: {fileID: 8220554039828413156, guid: 84873d989bb3b4842a5407dcf8df802c,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 698f0c7c7fffd7b4fa80b0c88677efe6, type: 3}
     - target: {fileID: 8220554039953835532, guid: 84873d989bb3b4842a5407dcf8df802c,
         type: 3}
-      propertyPath: currentWave
-      value: 0
+      propertyPath: warningTime
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84873d989bb3b4842a5407dcf8df802c, type: 3}

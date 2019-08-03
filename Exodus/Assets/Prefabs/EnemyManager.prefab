@@ -437,7 +437,7 @@ MonoBehaviour:
   spawnDistance: 14
   minEnemyGroupingDistance: 0.2
   maxEnemyGroupingDistance: 1.2
-  warningTime: 0.5
+  warningTime: 0.8
   enemy: {fileID: 6730991358984537902, guid: 5001d806ff7d1244096694a1e0e44714, type: 3}
   warning: {fileID: 5997450961998949246, guid: 03a5261cbd235bf47a81a247b7fc2759, type: 3}
   currentWave: 0
