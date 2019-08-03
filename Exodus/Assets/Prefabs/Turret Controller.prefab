@@ -51,8 +51,11 @@ MonoBehaviour:
     m_Bits: 256
   ghostTurret: {fileID: 8505929046714314241, guid: fc8bf484f5c892c46b48b2e23bac46d4,
     type: 3}
+  turretPositionPrefab: {fileID: 3574657930267847697, guid: b5ee355fe8839224a812a23772e40304,
+    type: 3}
   turretPrefab: {fileID: 7264854560260044106, guid: 49eb1f8453434a644b05bf5b0e16a592,
     type: 3}
+  spokes: 20
 --- !u!1 &3272325701427034518
 GameObject:
   m_ObjectHideFlags: 0

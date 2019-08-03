@@ -9,6 +9,7 @@ public class TurretManager : MonoBehaviour, ITurretMessages
     public Transform turretDropPosition;
     public LayerMask planetLayer;
     public GameObject ghostTurret;
+    public GameObject turretPositionPrefab;
     public Turret turretPrefab;
     public int spokes = 20;
 
@@ -22,18 +23,19 @@ public class TurretManager : MonoBehaviour, ITurretMessages
 
         for (int i = 0; i < spokes; i++)
         {
-            turretPositions.Add(new GameObject(string.Format("Turret Position {0}", i)));
-            turretPositions[i].transform.parent = planet.transform;
+            turretPositions.Add(Instantiate(turretPositionPrefab, planet.transform));
+            turretPositions[i].name = string.Format("Turret Position {0}", i);
             turretPositions[i].transform.localPosition = Vector3.zero;
             turretPositions[i].transform.Rotate(Vector3.forward * theta * i);
             turretPositions[i].transform.Translate(Vector3.up * turretDropPosition.position.y);
         }
 
         ghostTurretInstance = Instantiate(ghostTurret, transform);
-        ghostTurretInstance.GetComponent<GhostTurret>().planet = planet.transform;
         ghostTurretInstance.name = "Ghost Turret";
         ghostTurretInstance.SetActive(false);
 
+        ghostTurretInstance.GetComponent<GhostTurret>().targetPosition = turretPositions[0].transform;
+        ghostTurretInstance.GetComponent<GhostTurret>().topPosition = turretDropPosition;
     }
 
     public void GameWon()
@@ -57,9 +59,11 @@ public class TurretManager : MonoBehaviour, ITurretMessages
         ghostTurretInstance.SetActive(false);
         Turret newTurret = Instantiate(turretPrefab, planet.transform);
         newTurret.transform.position = ghostTurretInstance.transform.position;
-        newTurret.transform.localEulerAngles = -planet.transform.eulerAngles;// + new Vector3(0, 0, 90f);
+        newTurret.transform.rotation = ghostTurret.transform.rotation;
         newTurret.gameObject.name = "New Turret";
         newTurret.SetTurretType(Turret.TurretType.Basic);
+
+        int index = turretPositions.IndexOf(ghostTurret.GetComponent<GhostTurret>().targetPosition.gameObject);
     }
 
     public void RemoveTurret()
