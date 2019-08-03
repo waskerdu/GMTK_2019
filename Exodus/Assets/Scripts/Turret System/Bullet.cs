@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
     public float moveSpeed = 50f;
     public float maxLifetime = 5f;
     [HideInInspector] public float damage;
-    public bool pierce;
 
     float lifeTime;
 
@@ -36,9 +35,6 @@ public class Bullet : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(string.Format("I've triggered on {0}! Dealing {1} damage.", collision.name, damage));
-        if (pierce)
-            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
-        else
-            TurretManager.Instance.bulletPooler.Push(this);
+        TurretManager.Instance.bulletPooler.Push(this);
     }
 }

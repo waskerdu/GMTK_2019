@@ -859,6 +859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 179120510}
   - component: {fileID: 179120509}
+  - component: {fileID: 179120511}
   m_Layer: 0
   m_Name: Damage Test
   m_TagString: Untagged
@@ -900,12 +901,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179120508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.001, y: 1.003, z: 0}
+  m_LocalPosition: {x: -0.001, y: 1.444, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &179120511
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179120508}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &210791029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2979,18 +3001,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774946916}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b11c1e6c7fa4d3c44a42be7a9698fc1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: {fileID: 1571902291}
-  pauseMenu: {fileID: 1135899367}
+  menus: []
   turretManager: {fileID: 1090682887}
   planet: {fileID: 2076594455}
   enemyManager: {fileID: 311781620}
   difficulty: 0
   inGame: 0
+  skipMenu: 0
 --- !u!1 &822983618
 GameObject:
   m_ObjectHideFlags: 0
@@ -4577,10 +4599,16 @@ MonoBehaviour:
   jumpPower: 2
   turretSystem: {fileID: 1090682887}
   sliderObj: {fileID: 1335747081}
+  camObj: {fileID: 519420028}
+  materialUi: {fileID: 905819948}
+  integrityUi: {fileID: 2008023124}
   minZoom: 0.15
   maxZoom: 5
   zoomSpeed: 1
   zoom: 0.5
+  material: 3
+  integrity: 1
+  damageMultiplier: 0.01
   confirmTime: 1
 --- !u!82 &2076594458
 AudioSource:
