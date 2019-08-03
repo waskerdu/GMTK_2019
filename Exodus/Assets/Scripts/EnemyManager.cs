@@ -35,7 +35,7 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         SetDifficulty(0);
-        waveTimer = difficultyConfig.timeBetweenWaves;
+        waveTimer = difficultyConfig.beginningSpawnDelay;
         stragglerTimer = waveTimer;
     }
 
@@ -71,6 +71,13 @@ public class EnemyManager : MonoBehaviour
 
         var enemiesThisGroup = Mathf.Min(difficultyConfig.minEnemiesPerGroup + (difficultyConfig.rampSpeedEnemiesPerGroup * currentWave), difficultyConfig.maxEnemiesPerGroup);
 
+        if (Random.Range(0f,1f) <= Mathf.Min(difficultyConfig.minSwarmChance + (difficultyConfig.rampSpeedSwarmChance * currentWave), difficultyConfig.maxSwarmChance) )
+        {
+            var newKing = SpawnSingle();
+            newKing.transform.position = spawnPos;
+            newKing.GetComponent<Enemy>().BecomeKing();
+            enemiesThisGroup -= 1;
+        }
 
         for (int i = 0; i < enemiesThisGroup; i++)
         {
@@ -93,7 +100,7 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    void SpawnSingle()
+    GameObject SpawnSingle()
     {
         var newEnemy = FindFirstInactiveEnemy();
         if (!newEnemy)
@@ -106,7 +113,7 @@ public class EnemyManager : MonoBehaviour
             newEnemy.SetActive(true);
             newEnemy.transform.position = GetNewSpawnPos();
         }
-        
+        return newEnemy;
     }
 
     Vector3 GetNewSpawnPos()

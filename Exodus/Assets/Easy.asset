@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Easy
   m_EditorClassIdentifier: 
   timeBetweenWaves: 10
+  beginningSpawnDelay: 0
   minEnemiesPerGroup: 1
   maxEnemiesPerGroup: 10
   rampSpeedEnemiesPerGroup: 0.7
-  minGroupsPerWave: 0
-  maxGroupsPerWave: 4
+  minGroupsPerWave: 1
+  maxGroupsPerWave: 1
   rampSpeedGroupsPerWave: 0.5
-  minSwarmChance: 0
-  maxSwarmChance: 0
-  rampSpeedSwarmChance: 0
-  stragglerSpawnRate: 12
-  minStragglerSpawnTime: 4
-  rampSpeedStragglerSpawnRate: 0.01
+  minSwarmChance: 0.203
+  maxSwarmChance: 0.919
+  rampSpeedSwarmChance: 0.1
+  stragglerSpawnRate: 8
+  minStragglerSpawnTime: 2
+  rampSpeedStragglerSpawnRate: 0.5
