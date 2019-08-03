@@ -34,7 +34,12 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(string.Format("I've triggered on {0}! Dealing {1} damage.", collision.name, damage));
-        TurretManager.Instance.bulletPooler.Push(this);
+        Enemy enemy = collision.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            //Debug.Log(string.Format("I've triggered on {0}! Dealing {1} damage.", collision.name, damage));
+            enemy.SendMessage("DamageEnemy", damage);
+            TurretManager.Instance.bulletPooler.Push(this);
+        }
     }
 }

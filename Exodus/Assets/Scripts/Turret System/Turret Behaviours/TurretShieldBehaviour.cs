@@ -12,7 +12,13 @@ public class TurretShieldBehaviour : TurretBehaviour
     public override void Init()
     {
         shield = Instantiate(shieldPrefab, turret.transform);
+        shield.behaviour = this;
         shield.transform.position = turret.bulletSpawnPoint.position;
+    }
+
+    public void DestroyTurret()
+    {
+        turret.DestroyTurret();
     }
 
     public override void Shutdown()

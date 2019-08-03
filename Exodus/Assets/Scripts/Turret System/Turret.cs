@@ -26,6 +26,7 @@ public class Turret : MonoBehaviour, ITurretMessages
     public int boosts;
 
     TurretBehaviour turretBehaviour;
+    [HideInInspector] public TurretPosition myPosition;
 
     private void Awake()
     {
@@ -80,6 +81,11 @@ public class Turret : MonoBehaviour, ITurretMessages
     public void DamagePlanet(float damage)
     {
         Debug.Log(string.Format("{0} damage dealt to {1}.", damage, name));
+    }
+
+    public void DestroyTurret()
+    {
+        TurretManager.Instance.RemoveTurret(myPosition);
     }
 }
 
