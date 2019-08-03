@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float kingSpeed = 0.7f;
     [SerializeField] float swarmSpeed = 1.6f;
     [SerializeField] float rotateSpeed = 1f;
+    [SerializeField] float swarmRotateSpeed = 1.8f;
     [SerializeField] float newWanderDirectionTime = 3f;
     [SerializeField] float wanderAccuracyAdjust = 4f;
     [SerializeField] float beelineDistance = 4f;
@@ -73,26 +74,50 @@ public class Enemy : MonoBehaviour
                 ChangeTargetDir();
                 CheckDistanceToPlanet();
                 break;
-                
+
 
             case MovementMode.Beeline:
                 targetDir = (planetPos - transform.position).normalized;
                 break;
 
             case MovementMode.Swarm:
+                CheckDistanceToPlanet();
                 targetDir = (swarmKing.transform.position - transform.position).normalized;
                 break;
         }
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, targetDir), Time.deltaTime * rotateSpeed);
+        SetRotation();
+        SetVelocity();
+
+    }
+
+    private void SetRotation()
+    {
+        if (movementMode == MovementMode.Swarm)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, targetDir), Time.deltaTime * swarmRotateSpeed);
+
+        }
+        else
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, targetDir), Time.deltaTime * rotateSpeed);
+
+        }
+    }
+
+    private void SetVelocity()
+    {
         if (isSwarmKing)
         {
             rb.velocity = transform.up * kingSpeed;
+        }
+        else if (movementMode == MovementMode.Swarm)
+        {
+            rb.velocity = transform.up * swarmSpeed;
         }
         else
         {
             rb.velocity = transform.up * movementSpeed;
         }
-        
     }
 
     private void ChangeTargetDir()
