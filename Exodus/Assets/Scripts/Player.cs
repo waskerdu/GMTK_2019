@@ -64,7 +64,14 @@ public class Player : MonoBehaviour, IPlayerMessages
             {
                 if (ready)
                 {
-                    if(place){turretSystem.SendMessage("PlaceTurret");}
+                    if(place)
+                    {
+                        if (material>=1.0f)
+                        {
+                            turretSystem.SendMessage("PlaceTurret");
+                            material-=1.0f;
+                        }
+                    }
                     else{turretSystem.SendMessage("RemoveTurret");}
                     turretSystem.SendMessage("ShowGhostTurret",false);
                     timer = 0.0f;
