@@ -123,6 +123,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         newTurret.transform.localPosition = new Vector3(0, turretHeightOffset * pos.turrets.Count, 0);
         newTurret.gameObject.name = "New Turret";
         newTurret.SetTurretType(Turret.TurretType.Basic);
+        newTurret.myPosition = pos;
 
         pos.turrets.Add(newTurret);
         ghostTurretInstance.gameObject.SetActive(false);
@@ -139,10 +140,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         return turretPositions[index];
     }
 
-    public void RemoveTurret()
+    public void RemoveTurret(TurretPosition pos)
     {
-        TurretPosition pos = GetTopPosition();
-
         foreach (Turret turret in pos.turrets)
             Destroy(turret.gameObject);
 
@@ -162,6 +161,11 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
             foreach (TurretPosition position in positions)
                 position.SetTurretType(positions.Count);
         }
+    }
+
+    public void RemoveTurret()
+    {
+        RemoveTurret(GetTopPosition());
     }
 
     public void SetBiomeData(int[] biomes)

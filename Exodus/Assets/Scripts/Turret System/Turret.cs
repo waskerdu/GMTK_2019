@@ -26,6 +26,7 @@ public class Turret : MonoBehaviour, ITurretMessages
     public int boosts;
 
     TurretBehaviour turretBehaviour;
+    [HideInInspector] public TurretPosition myPosition;
 
     private void Awake()
     {
@@ -52,9 +53,11 @@ public class Turret : MonoBehaviour, ITurretMessages
                     turretBehaviour = null;
                 else
                 {
+                    turretBehaviour.Shutdown();
                     turretBehaviour = Instantiate(link.behaviour);
                     turretBehaviour.turret = this;
                     turretBehaviour.bulletSpawnPoint = bulletSpawnPoint;
+                    turretBehaviour.Init();
                 }
             }
         }
@@ -62,7 +65,11 @@ public class Turret : MonoBehaviour, ITurretMessages
         if (turretType == TurretType.Boost)
         {
             boostSprite.gameObject.SetActive(true);
-            turretBehaviour = null;
+            if (turretBehaviour != null)
+            {
+                turretBehaviour.Shutdown();
+                turretBehaviour = null;
+            }
         }
     }
 
@@ -74,6 +81,11 @@ public class Turret : MonoBehaviour, ITurretMessages
     public void DamagePlanet(float damage)
     {
         Debug.Log(string.Format("{0} damage dealt to {1}.", damage, name));
+    }
+
+    public void DestroyTurret()
+    {
+        TurretManager.Instance.RemoveTurret(myPosition);
     }
 }
 
