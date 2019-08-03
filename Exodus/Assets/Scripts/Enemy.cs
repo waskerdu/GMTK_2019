@@ -155,16 +155,20 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "Enemy")
+        {
+            return;
+        }
         if (isSwarmKing)
         {
             SendMessageUpwards("BigAttackSound");
 
-            collision.gameObject.SendMessageUpwards("DamagePlanet", kingDamage);
+            collision.gameObject.SendMessage("DamagePlanet", kingDamage);
         }
         else
         {
             SendMessageUpwards("SmallAttackSound");
-            collision.gameObject.SendMessageUpwards("DamagePlanet", damage);
+            collision.gameObject.SendMessage("DamagePlanet", damage);
 
         }
     }
