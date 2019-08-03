@@ -12,17 +12,31 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] GameObject enemy;
     [SerializeField] int currentWave;
+
+    [Header("Sounds")]
+    [SerializeField] AudioSource smallEnemyDamageSound;
+    [SerializeField] AudioSource bigEnemyDamageSound;
+    [SerializeField] AudioSource smallEnemyDestroySound;
+    [SerializeField] AudioSource bigEnemyDestroySound;
+    [SerializeField] AudioSource smallEnemyAttackSound;
+    [SerializeField] AudioSource bigEnemyAttackSound;
+    [SerializeField] AudioSource swarmSound;
+    [SerializeField] AudioSource warningSound;
+
+
+
     DifficultyConfig difficultyConfig;
     List<GameObject> enemyPool = new List<GameObject>();
     Vector3 planetPos = new Vector3(0,0,0);
-    float waveTimer = 3f;
-    float stragglerTimer = 3f;
+    float waveTimer;
+    float stragglerTimer;
 
 
     private void Awake()
     {
         SetDifficulty(0);
-
+        waveTimer = difficultyConfig.timeBetweenWaves;
+        stragglerTimer = waveTimer;
     }
 
     // Update is called once per frame
@@ -145,5 +159,57 @@ public class EnemyManager : MonoBehaviour
         return null;
     }
 
+    public void SmallDeathSound()
+    {
+        if (!smallEnemyDestroySound.isPlaying)
+        {
+            smallEnemyDestroySound.Play();
 
+        }
+    }
+
+    public void BigDeathSound()
+    {
+        if (!bigEnemyDestroySound.isPlaying)
+        {
+            bigEnemyDestroySound.Play();
+
+        }
+    }
+
+    public void SmallDamageSound()
+    {
+        if (!smallEnemyDamageSound.isPlaying)
+        {
+            smallEnemyDamageSound.Play();
+
+        }
+    }
+
+    public void BigDamageSound()
+    {
+        if (!bigEnemyDamageSound.isPlaying)
+        {
+            bigEnemyDamageSound.Play();
+
+        }
+    }
+
+    public void SmallAttackSound()
+    {
+        if (!smallEnemyAttackSound.isPlaying)
+        {
+            smallEnemyAttackSound.Play();
+
+        }
+    }
+
+    public void BigAttackSound()
+    {
+        if (!bigEnemyAttackSound.isPlaying)
+        {
+            bigEnemyAttackSound.Play();
+
+        }
+    }
 }

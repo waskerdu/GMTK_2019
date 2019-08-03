@@ -19,13 +19,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] float newWanderDirectionTime = 3f;
     [SerializeField] float wanderAccuracyAdjust = 4f;
     public Vector3 targetDir = new Vector3();
-    Rigidbody2D rigidbody;
+    Rigidbody2D rb;
     float directionChangeTimer = 0f;
     // Start is called before the first frame update
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, targetDir), Time.deltaTime * rotateSpeed);
-        rigidbody.velocity = transform.up * movementSpeed;
+        rb.velocity = transform.up * movementSpeed;
     }
 
     private void ChangeTargetDir()
@@ -74,12 +74,14 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        SendMessageUpwards("SmallAttackSound");
         collision.gameObject.SendMessage("DamagePlanet", damage);
         Die();
     }
 
     public void DamageEnemy(float damage)
     {
+        SendMessageUpwards("SmallDamageSound");
         health -= damage;
         if (health <= 0)
         {
@@ -89,6 +91,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        SendMessageUpwards("SmallDeathSound");
         gameObject.SetActive(false);
     }
 }
