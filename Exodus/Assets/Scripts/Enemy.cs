@@ -59,6 +59,8 @@ public class Enemy : MonoBehaviour
 
         else if ((planetPos - transform.position).magnitude < swarmDistance && isSwarmKing)
         {
+            SendMessageUpwards("SwarmSound");
+
             GetComponentInChildren<SwarmCall>(true).gameObject.SetActive(true);
         }
         
@@ -142,13 +144,29 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-        SendMessageUpwards("SmallAttackSound");
+            SendMessageUpwards("SmallAttackSound");
             collision.gameObject.SendMessageUpwards("DamagePlanet", damage);
 
         }
 
 
         Die();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isSwarmKing)
+        {
+            SendMessageUpwards("BigAttackSound");
+
+            collision.gameObject.SendMessageUpwards("DamagePlanet", kingDamage);
+        }
+        else
+        {
+            SendMessageUpwards("SmallAttackSound");
+            collision.gameObject.SendMessageUpwards("DamagePlanet", damage);
+
+        }
     }
 
 
@@ -206,7 +224,5 @@ public class Enemy : MonoBehaviour
     {
         isSwarmKing = true;
         transform.localScale = new Vector3(kingScale,kingScale,kingScale);
-        
-
     }
 }
