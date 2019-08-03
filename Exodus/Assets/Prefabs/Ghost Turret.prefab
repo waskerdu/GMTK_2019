@@ -123,9 +123,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0169b644ae658b3418c55cf40addfb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {fileID: 0}
+  targetPosition:
+    positionObject: {fileID: 0}
+    turrets: []
   topPosition: {fileID: 0}
   turretPositionMask:
     serializedVersion: 2
     m_Bits: 512
   detectionRadius: 1
+  turretHeightOffset: 0.5

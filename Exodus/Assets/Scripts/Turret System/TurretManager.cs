@@ -1,41 +1,67 @@
-﻿using System.Collections;
+﻿using Malee;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TurretManager : MonoBehaviour, ITurretMessages
 {
+    static TurretManager instance;
+    public static TurretManager Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<TurretManager>();
+            return instance;
+        }
+    }
+
+    public enum Biome
+    {
+        Forest,
+        Desert,
+        Ocean,
+        Mountain
+    }
+
     public GameObject planet;
     public Transform turretDropPosition;
     public LayerMask planetLayer;
     public GameObject ghostTurret;
     public GameObject turretPositionPrefab;
     public Turret turretPrefab;
+    public float turretHeightOffset = 0.5f;
     public int spokes = 20;
 
-    GameObject ghostTurretInstance;
-    List<GameObject> turretPositions;
+    GhostTurret ghostTurretInstance;
+    TurretPositions turretPositions;
+    List<Biome> biomeList;
 
     private void Awake()
     {
         float theta = 360f / spokes;
-        turretPositions = new List<GameObject>();
+        turretPositions = new TurretPositions();
 
         for (int i = 0; i < spokes; i++)
         {
-            turretPositions.Add(Instantiate(turretPositionPrefab, planet.transform));
-            turretPositions[i].name = string.Format("Turret Position {0}", i);
-            turretPositions[i].transform.localPosition = Vector3.zero;
-            turretPositions[i].transform.Rotate(Vector3.forward * theta * i);
-            turretPositions[i].transform.Translate(Vector3.up * turretDropPosition.position.y);
+            TurretPosition pos = new TurretPosition();
+            pos.turrets = new List<Turret>();
+            pos.positionObject = Instantiate(turretPositionPrefab, planet.transform);
+            pos.positionObject.name = string.Format("Turret Position {0}", i);
+            pos.positionObject.transform.localPosition = Vector3.zero;
+            pos.positionObject.transform.Rotate(Vector3.forward * theta * -i);
+            pos.positionObject.transform.Translate(Vector3.up * turretDropPosition.position.y);
+            turretPositions.Add(pos);
         }
 
-        ghostTurretInstance = Instantiate(ghostTurret, transform);
+        ghostTurretInstance = Instantiate(ghostTurret, transform).GetComponent<GhostTurret>();
         ghostTurretInstance.name = "Ghost Turret";
-        ghostTurretInstance.SetActive(false);
+        ghostTurretInstance.gameObject.SetActive(false);
 
-        ghostTurretInstance.GetComponent<GhostTurret>().targetPosition = turretPositions[0].transform;
-        ghostTurretInstance.GetComponent<GhostTurret>().topPosition = turretDropPosition;
+        ghostTurretInstance.targetPosition = turretPositions[0];
+        ghostTurretInstance.topPosition = turretDropPosition;
+        ghostTurretInstance.turretHeightOffset = turretHeightOffset;
     }
 
     public void GameWon()
@@ -50,26 +76,52 @@ public class TurretManager : MonoBehaviour, ITurretMessages
 
     public void ShowGhostTurret(bool toShow = true)
     {
-        ghostTurretInstance.SetActive(toShow);
+        ghostTurretInstance.gameObject.SetActive(toShow);
         ghostTurretInstance.transform.position = turretDropPosition.position;
     }
 
     public void PlaceTurret()
     {
-        ghostTurretInstance.SetActive(false);
-        Turret newTurret = Instantiate(turretPrefab, planet.transform);
-        newTurret.transform.position = ghostTurretInstance.transform.position;
-        newTurret.transform.rotation = ghostTurret.transform.rotation;
+        TurretPosition pos = GetTopPosition();
+
+        Turret newTurret = Instantiate(turretPrefab, pos.positionObject.transform);
+        newTurret.transform.localRotation = Quaternion.identity;
+        newTurret.transform.localPosition = new Vector3(0, turretHeightOffset * pos.turrets.Count, 0);
         newTurret.gameObject.name = "New Turret";
         newTurret.SetTurretType(Turret.TurretType.Basic);
 
-        int index = turretPositions.IndexOf(ghostTurret.GetComponent<GhostTurret>().targetPosition.gameObject);
+        pos.turrets.Add(newTurret);
+        ghostTurretInstance.gameObject.SetActive(false);
+    }
+
+    public TurretPosition GetTopPosition()
+    {
+        float rot = planet.transform.eulerAngles.z;
+        int index = Mathf.RoundToInt(Utilities.Map(rot >= 0 ? rot : 360f + rot, 0, 360f, 0, spokes)) % spokes;
+        return turretPositions[index];
     }
 
     public void RemoveTurret()
     {
         //
     }
+
+    public void SetBiomeData(int[] biomes)
+    {
+        biomeList = new List<Biome>();
+        foreach (int biome in biomes)
+            biomeList.Add((Biome)biome);
+    }
+}
+
+[System.Serializable]
+public class TurretPositions : ReorderableArray<TurretPosition> { }
+
+[System.Serializable]
+public class TurretPosition
+{
+    public GameObject positionObject;
+    public List<Turret> turrets;
 }
 
 public interface ITurretMessages : IEventSystemHandler
@@ -79,4 +131,5 @@ public interface ITurretMessages : IEventSystemHandler
     void RemoveTurret();
     void SetDifficulty(int difficulty);
     void GameWon();
+    void SetBiomeData(int[] biomes);
 }
