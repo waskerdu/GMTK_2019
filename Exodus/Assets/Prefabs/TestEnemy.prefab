@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8406353632554096691}
   - component: {fileID: 2216125781716633289}
   - component: {fileID: 4314974690473543273}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TestEnemy
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -46,9 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e236f27a586f3408062f613c7ef9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 0
+  health: 3
+  damage: 1
   isSwarmKing: 0
   isSwarmDrone: 0
+  movementMode: 0
   movementSpeed: 1
   rotateSpeed: 1
   newWanderDirectionTime: 3
