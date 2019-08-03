@@ -112,12 +112,13 @@ public class Enemy : MonoBehaviour
         if (isSwarmKing)
         {
             SendMessageUpwards("BigAttackSound");
-            collision.gameObject.SendMessage("DamagePlanet", kingDamage);
+            
+            collision.gameObject.SendMessageUpwards("DamagePlanet", kingDamage);
         }
         else
         {
         SendMessageUpwards("SmallAttackSound");
-        collision.gameObject.SendMessage("DamagePlanet", damage);
+            collision.gameObject.SendMessageUpwards("DamagePlanet", damage);
 
         }
 
