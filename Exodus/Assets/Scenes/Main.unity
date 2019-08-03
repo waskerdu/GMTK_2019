@@ -3921,7 +3921,7 @@ GameObject:
   - component: {fileID: 905819951}
   - component: {fileID: 905819950}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Material
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7003,10 +7003,15 @@ MonoBehaviour:
   turretSystem: {fileID: 1090682887}
   sliderObj: {fileID: 1335747081}
   camObj: {fileID: 519420028}
+  materialUi: {fileID: 905819948}
+  integrityUi: {fileID: 2008023124}
   minZoom: 0.15
   maxZoom: 5
   zoomSpeed: 1
   zoom: 0.5
+  material: 3
+  integrity: 1
+  damageMultiplier: 0.01
   confirmTime: 1
 --- !u!82 &2076594458
 AudioSource:

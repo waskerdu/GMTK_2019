@@ -41,7 +41,6 @@ public class Player : MonoBehaviour, IPlayerMessages
     void Update()
     {
         planetRb.angularVelocity = Input.GetAxisRaw("Horizontal")*spinSpeed*Time.deltaTime;
-        AddResources(1.0f);
         if(Input.GetButtonDown("Jump")){playerRb.velocity=Vector2.up*jumpPower;}
         if(Input.GetButtonDown("Fire1"))
         {
@@ -107,7 +106,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         //Debug.Log(string.Format("Player: {0} drill damage!", damage));
         //TODO: actually damage planet
         integrity-=damage*damageMultiplier;
-        integrityUi.GetComponent<TextMeshPro>().SetText((Mathf.Round(integrity*1000)/10).ToString()+"%");
+        integrityUi.GetComponent<TextMeshProUGUI>().SetText((Mathf.Round(integrity*1000)/10).ToString()+"%");
     }
 
     public void AddResources(float resources)
@@ -115,8 +114,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         //Debug.Log(string.Format("Player: {0} resources added!", resources));
         //TODO: actually add resources
         material+=resources;
-        TextMeshPro textmeshPro = materialUi.GetComponent<TextMeshPro>();
-        textmeshPro.SetText("Material: ");
+        materialUi.GetComponent<TextMeshProUGUI>().SetText("Material: "+(Mathf.Round(material*10)/10).ToString());
     }
 }
 
