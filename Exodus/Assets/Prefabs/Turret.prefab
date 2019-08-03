@@ -421,7 +421,12 @@ MonoBehaviour:
   boostSprite: {fileID: 7264854559205465062}
   bulletSpawnPoint: {fileID: 5404368110263814455}
   multiplierPerBoost: 0.5
+  hitPoints: 10
   boosts: 0
+  myPosition:
+    positionObject: {fileID: 0}
+    turrets: []
+    biome: 0
 --- !u!1 &7264854560458225691
 GameObject:
   m_ObjectHideFlags: 0

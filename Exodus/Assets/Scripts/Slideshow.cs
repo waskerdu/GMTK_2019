@@ -19,7 +19,7 @@ public class Slideshow : MonoBehaviour
     {
         if(slide < transform.childCount+1)
         {
-            
+            Debug.Log("got here");
             if (timer>0.0f){timer-=Time.deltaTime;}
             else
             {

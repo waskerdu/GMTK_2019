@@ -109,6 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3908dce5608e7a4abbf5d3017bc2b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageSoak: 50
+  damageSoak: 2
   damageToEnemy: 50
   behaviour: {fileID: 0}
