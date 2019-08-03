@@ -130,8 +130,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public TurretPosition GetTopPosition()
     {
-        //float rot = planet.transform.eulerAngles.z;
-        float rot = rb.rotation;
+        float rot = planet.transform.eulerAngles.z;
         int index = Mathf.RoundToInt(Utilities.Map(rot >= 0 ? rot : 360f + rot, 0, 360f, 0, spokes)) % spokes;
         return turretPositions[index];
     }

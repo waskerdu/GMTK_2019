@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 8505929046714314241}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 8505929046338448012}
   m_Father: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   targetPosition:
     positionObject: {fileID: 0}
     turrets: []
+    biome: 0
   topPosition: {fileID: 0}
   turretPositionMask:
     serializedVersion: 2
