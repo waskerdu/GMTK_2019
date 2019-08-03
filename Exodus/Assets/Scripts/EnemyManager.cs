@@ -60,6 +60,10 @@ public class EnemyManager : MonoBehaviour
     {
         foreach (var enemy in enemyPool)
         {
+            if (!enemy.activeInHierarchy)
+            {
+                continue;
+            }
             enemy.SendMessage("GameWon");
         }
     }
