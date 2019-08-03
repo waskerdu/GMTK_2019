@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c4ccb0b848602246b06bb6247252ddc, type: 3}
-  m_Name: Easy
+  m_Name: Normal
   m_EditorClassIdentifier: 
-  timeBetweenWaves: 15
-  beginningSpawnDelay: 4
+  timeBetweenWaves: 12
+  beginningSpawnDelay: 2
   minEnemiesPerGroup: 1
-  maxEnemiesPerGroup: 8
-  rampSpeedEnemiesPerGroup: 0.2
+  maxEnemiesPerGroup: 10
+  rampSpeedEnemiesPerGroup: 0.3
   minGroupsPerWave: 1
   maxGroupsPerWave: 3
-  rampSpeedGroupsPerWave: 0.1
-  minSwarmChance: 0.153
+  rampSpeedGroupsPerWave: 0.15
+  minSwarmChance: 0.386
   maxSwarmChance: 1
-  rampSpeedSwarmChance: 0.08
+  rampSpeedSwarmChance: 0.1
   stragglerSpawnRate: 8
   minStragglerSpawnTime: 2
   rampSpeedStragglerSpawnRate: 0.3
