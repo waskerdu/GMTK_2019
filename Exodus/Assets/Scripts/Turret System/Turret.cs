@@ -21,24 +21,52 @@ public class Turret : MonoBehaviour, ITurretMessages
     [Reorderable]
     public TurretTypeLinks typeLinks;
     public SpriteRenderer boostSprite;
-    public bool boosted;
+    public float multiplierPerBoost = 0.5f;
+    public int boosts;
+
+    TurretBehaviour turretBehaviour;
 
     private void Awake()
     {
-        SetBoost(false);
+        turretBehaviour = Instantiate(typeLinks[0].behaviour);
+        turretBehaviour.turret = this;
+        boostSprite.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (turretBehaviour != null)
+            turretBehaviour.Update();
     }
 
     public void SetTurretType(TurretType newType)
     {
         turretType = newType;
         foreach (TurretTypeLink link in typeLinks)
+        {
             link.sprite.gameObject.SetActive(link.type == turretType);
+            if (link.type == turretType)
+            {
+                if (link.behaviour == null)
+                    turretBehaviour = null;
+                else
+                {
+                    turretBehaviour = Instantiate(link.behaviour);
+                    turretBehaviour.turret = this;
+                }
+            }
+        }
+
+        if (turretType == TurretType.Boost)
+        {
+            boostSprite.gameObject.SetActive(true);
+            turretBehaviour = null;
+        }
     }
 
-    public void SetBoost(bool toBoost = true)
+    public float GetBoostMultiplier()
     {
-        boosted = toBoost;
-        boostSprite.gameObject.SetActive(toBoost);
+        return multiplierPerBoost * boosts;
     }
 
     public void DamagePlanet(float damage)
@@ -55,6 +83,7 @@ public class TurretTypeLink
 {
     public Turret.TurretType type;
     public SpriteRenderer sprite;
+    public TurretBehaviour behaviour;
 }
 
 public interface ITurretMessages : IEventSystemHandler

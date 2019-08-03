@@ -30,6 +30,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     public LayerMask planetLayer;
     public GameObject ghostTurret;
     public GameObject turretPositionPrefab;
+    public ObjectPooler bulletPooler;
     public Turret turretPrefab;
     public float turretHeightOffset = 0.5f;
     public int spokes = 20;
@@ -40,6 +41,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     private void Awake()
     {
+        bulletPooler.InitializePool();
+
         float theta = 360f / spokes;
         turretPositions = new TurretPositions();
 
@@ -75,7 +78,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
         for (int i = 0; i < spokes; i++)
         {
-            biomeTesting.Add(i % 4);
+            biomeTesting.Add(0);
         }
 
         SetBiomeData(biomeTesting.ToArray());
@@ -118,7 +121,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         pos.turrets.Add(newTurret);
         ghostTurretInstance.gameObject.SetActive(false);
 
-        List<TurretPosition> positions = pos.GetLeftmostPositionWithTurret().GetTurrets();
+        List<TurretPosition> positions = pos.GetLeftmostPositionWithTurret(spokes - 1).GetTurrets(spokes - 1);
         foreach (TurretPosition position in positions)
             position.SetTurretType(positions.Count);
     }
@@ -142,14 +145,14 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         //TODO: Set turret types
         if (pos.leftPosition.turrets.Count > 0)
         {
-            List<TurretPosition> positions = pos.leftPosition.GetLeftmostPositionWithTurret().GetTurrets();
+            List<TurretPosition> positions = pos.leftPosition.GetLeftmostPositionWithTurret(spokes - 1).GetTurrets(spokes - 1);
             foreach (TurretPosition position in positions)
                 position.SetTurretType(positions.Count);
         }
 
         if (pos.rightPosition.turrets.Count > 0)
         {
-            List<TurretPosition> positions = pos.rightPosition.GetTurrets();
+            List<TurretPosition> positions = pos.rightPosition.GetTurrets(spokes - 1);
             foreach (TurretPosition position in positions)
                 position.SetTurretType(positions.Count);
         }
@@ -181,12 +184,13 @@ public class TurretPosition
         {
             if (i < turrets.Count - 1)
             {
+                Debug.Log("Boost Turret");
                 turrets[i].SetTurretType(Turret.TurretType.Boost);
-                if (turrets.Count > 1)
-                    turrets[i].SetBoost(true);
             }
             else
             {
+                turrets[i].boosts = turrets.Count - 1;
+
                 if (chainQuantity == 1)
                     switch (biome)
                     {
@@ -214,19 +218,21 @@ public class TurretPosition
         }
     }
 
-    public TurretPosition GetLeftmostPositionWithTurret()
+    public TurretPosition GetLeftmostPositionWithTurret(int maxQuantity, int quantity = 0)
     {
+        if (quantity >= maxQuantity) return this;
+
         if (leftPosition.turrets.Count > 0)
-            return leftPosition.GetLeftmostPositionWithTurret();
+            return leftPosition.GetLeftmostPositionWithTurret(maxQuantity, quantity + 1);
         else
             return this;
     }
 
-    public List<TurretPosition> GetTurrets()
+    public List<TurretPosition> GetTurrets(int maxQuantity, int quantity = 0)
     {
-        if (rightPosition.turrets.Count > 0)
+        if (rightPosition.turrets.Count > 0 && quantity < maxQuantity)
         {
-            List<TurretPosition> positions = rightPosition.GetTurrets();
+            List<TurretPosition> positions = rightPosition.GetTurrets(maxQuantity, quantity + 1);
             positions.Add(this);
             return positions;
         }
@@ -236,6 +242,45 @@ public class TurretPosition
             positions.Add(this);
             return positions;
         }
+    }
+}
+
+[System.Serializable]
+public class ObjectPooler
+{
+    public int startingQuantity;
+    public Bullet prefab;
+    public GameObject parent;
+
+    List<Bullet> pool;
+
+    public void InitializePool()
+    {
+        pool = new List<Bullet>();
+
+        for (int i = 0; i < startingQuantity; i++)
+        {
+            pool.Add(GameObject.Instantiate(prefab, parent.transform));
+        }
+    }
+
+    public Bullet Pop()
+    {
+        if (pool.Count == 0)
+            pool.Add(GameObject.Instantiate(prefab, parent.transform));
+
+        Bullet gob = pool[0];
+        pool.RemoveAt(0);
+        gob.gameObject.SetActive(true);
+        return gob;
+    }
+
+    public void Push(Bullet gob)
+    {
+        gob.gameObject.SetActive(false);
+        gob.transform.position = Vector3.zero;
+        gob.transform.parent = parent.transform;
+        pool.Add(gob);
     }
 }
 
