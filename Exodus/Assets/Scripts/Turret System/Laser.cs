@@ -8,11 +8,10 @@ public class Laser : Bullet
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy != null)
+        if (collision.CompareTag("Enemy"))
         {
             //Debug.Log(string.Format("I've triggered on {0}! Dealing {1} damage.", collision.name, damage));
-            enemy.SendMessage("DamageEnemy", damage);
+            collision.SendMessageUpwards("DamageEnemy", damage);
             StartCoroutine(IgnoreForTime(collision, GetComponent<Collider2D>(), hitDetectTimeout));
         }
     }

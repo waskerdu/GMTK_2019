@@ -12,18 +12,16 @@ public class Shield : MonoBehaviour, ITurretMessages
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy != null)
+        if (collision.CompareTag("Enemy"))
         {
             //Debug.Log("Shield: Collision detected!");
-            enemy.SendMessage("DamageEnemy", damageToEnemy);
-            
+            collision.SendMessageUpwards("DamageEnemy", damageToEnemy);
+            DamagePlanet(1);
         }
     }
 
     public void DamagePlanet(float damage)
     {
-        Debug.Log(damage);
         damageTaken += damage;
 
         if (damageTaken >= damageSoak)

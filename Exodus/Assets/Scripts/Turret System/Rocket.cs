@@ -25,12 +25,11 @@ public class Rocket : Bullet
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy != null)
+        if (collision.CompareTag("Enemy"))
         {
             //Debug.Log(string.Format("I've triggered on {0}! Dealing {1} damage.", collision.name, damage));
             TurretManager.Instance.rocketPooler.Push(this);
-            enemy.SendMessage("DamageEnemy", damage);
+            collision.SendMessageUpwards("DamageEnemy", damage);
         }
     }
 }
