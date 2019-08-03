@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Turret : MonoBehaviour
+public class Turret : MonoBehaviour, ITurretMessages
 {
     public enum TurretType
     {
@@ -13,7 +14,7 @@ public class Turret : MonoBehaviour
         Rocket,
         Shield,
         Laser,
-        All
+        Boost
     }
 
     public TurretType turretType;
@@ -39,6 +40,11 @@ public class Turret : MonoBehaviour
         boosted = toBoost;
         boostSprite.gameObject.SetActive(toBoost);
     }
+
+    public void DamagePlanet(float damage)
+    {
+        Debug.Log(string.Format("{0} damage dealt to {1}.", damage, name));
+    }
 }
 
 [System.Serializable]
@@ -49,4 +55,9 @@ public class TurretTypeLink
 {
     public Turret.TurretType type;
     public SpriteRenderer sprite;
+}
+
+public interface ITurretMessages : IEventSystemHandler
+{
+    void DamagePlanet(float damage);
 }
