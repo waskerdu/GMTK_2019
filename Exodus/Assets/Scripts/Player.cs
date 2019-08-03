@@ -22,10 +22,10 @@ public class Player : MonoBehaviour, IPlayerMessages
     public float material = 3.0f;
     public float integrity = 1.0f;
     public float damageMultiplier = 0.01f;
+    public GameObject biomeSpriteObj;
     public int numForests = 7;
     public int numDeserts = 5;
     public int numOceans = 5;
-    
     public int numMountains = 3;
     List<int> biomes = new List<int>();
     Rigidbody2D planetRb;
@@ -41,30 +41,8 @@ public class Player : MonoBehaviour, IPlayerMessages
         planetRb = transform.GetChild(1).GetComponent<Rigidbody2D>();
         cam = camObj.GetComponent<Camera>();
         slider = sliderObj.GetComponent<Slider>();
-        int i;
-        List<int> tempBiomes = new List<int>();
-        for (i = 0; i < numForests; i++)
-        {
-            tempBiomes.Add(0);
-        }
-        for (i = 0; i < numDeserts; i++)
-        {
-            tempBiomes.Add(1);
-        }
-        for (i = 0; i < numOceans; i++)
-        {
-            tempBiomes.Add(2);
-        }
-        for (i = 0; i < numMountains; i++)
-        {
-            tempBiomes.Add(3);
-        }
-        while (tempBiomes.Count>0)
-        {
-            i = Random.Range(0,tempBiomes.Count-1);
-            biomes.Add(tempBiomes[i]);
-            tempBiomes.RemoveAt(i);
-        }
+        DamagePlanet(0);
+        AddResources(0);
     }
 
     // Update is called once per frame
@@ -99,7 +77,7 @@ public class Player : MonoBehaviour, IPlayerMessages
                         if (material>=1.0f)
                         {
                             turretSystem.SendMessage("PlaceTurret");
-                            material-=1.0f;
+                            AddResources(-1);
                         }
                     }
                     else{turretSystem.SendMessage("RemoveTurret");}
