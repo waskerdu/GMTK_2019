@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    enum MovementMode {Wander, Beeline, Swarm};
+    enum MovementMode {Wander, Beeline, Swarm, GameWon};
     Vector3 planetPos = new Vector3(0,0,0);
 
     [SerializeField] float health = 3f;
     [SerializeField] float damage = 1f;
+    [Header("Swarming")]
     [SerializeField] bool isSwarmKing = false;
     [SerializeField] float kingScale = 1.5f;
     [SerializeField] float kingDamage = 3f;
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float newWanderDirectionTime = 3f;
     [SerializeField] float wanderAccuracyAdjust = 4f;
     [SerializeField] float beelineDistance = 4f;
+    bool gameWon = false;
     public Vector3 targetDir = new Vector3();
     Rigidbody2D rb;
     float directionChangeTimer = 0f;
@@ -47,6 +49,14 @@ public class Enemy : MonoBehaviour
     {
         movementSpeed *= 1.8f;
         movementMode = MovementMode.Beeline;
+        isSwarmKing = false;
+    }
+
+    public void GameWon()
+    {
+        movementSpeed *= 1.8f;
+        rotateSpeed *= 2f;
+        movementMode = MovementMode.GameWon;
         isSwarmKing = false;
     }
 
@@ -85,6 +95,10 @@ public class Enemy : MonoBehaviour
             case MovementMode.Swarm:
                 CheckDistanceToPlanet();
                 targetDir = (swarmKing.transform.position - transform.position).normalized;
+                break;
+
+            case MovementMode.GameWon:
+                targetDir = -1 * (swarmKing.transform.position - transform.position).normalized;
                 break;
         }
         SetRotation();

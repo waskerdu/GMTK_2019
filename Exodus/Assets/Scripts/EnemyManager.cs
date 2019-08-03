@@ -7,15 +7,16 @@ public class EnemyManager : MonoBehaviour
 {
 
     [SerializeField] List<DifficultyConfig> difficultyConfigs;
+    [SerializeField] int currentWave;
+    [SerializeField] GameObject enemy;
     [SerializeField] float spawnDistance = 10f;
     [SerializeField] float minEnemyGroupingDistance = 0.2f;
     [SerializeField] float maxEnemyGroupingDistance = 1.2f;
+
+    [Header("Warning")]
+    [SerializeField] GameObject warning;
     [SerializeField] float warningTime = 0.5f;
 
-    [SerializeField] GameObject enemy;
-    [SerializeField] GameObject warning;
-
-    [SerializeField] int currentWave;
 
     [Header("Sounds")]
     [SerializeField] AudioSource smallEnemyDamageSound;
@@ -57,7 +58,10 @@ public class EnemyManager : MonoBehaviour
 
     public void GameWon()
     {
-
+        foreach (var enemy in enemyPool)
+        {
+            enemy.SendMessage("GameWon");
+        }
     }
 
     public void GameOver()
