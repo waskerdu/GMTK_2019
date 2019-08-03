@@ -7,9 +7,13 @@ public class Enemy : MonoBehaviour
 {
     enum MovementMode {Wander, Beeline};
     Vector3 planetPos = new Vector3(0,0,0);
-    [SerializeField] MovementMode movementMode = MovementMode.Wander;
+
+    [SerializeField] float health = 3f;
+    [SerializeField] float damage = 1f;
     [SerializeField] bool isSwarmKing = false;
     [SerializeField] bool isSwarmDrone = false;
+    [Header("Movement")]
+    [SerializeField] MovementMode movementMode = MovementMode.Wander;
     [SerializeField] float movementSpeed = 1f;
     [SerializeField] float rotateSpeed = 1f;
     [SerializeField] float newWanderDirectionTime = 3f;
@@ -32,6 +36,7 @@ public class Enemy : MonoBehaviour
 
     public void GameOver()
     {
+        movementSpeed *= 1.8f;
         movementMode = MovementMode.Beeline;
         isSwarmDrone = false;
         isSwarmKing = false;
@@ -65,5 +70,25 @@ public class Enemy : MonoBehaviour
             targetDir.x += UnityEngine.Random.Range(-wanderAccuracyAdjust, wanderAccuracyAdjust);
             targetDir.y += UnityEngine.Random.Range(-wanderAccuracyAdjust, wanderAccuracyAdjust);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collision.gameObject.SendMessage("DamagePlanet", damage);
+        Die();
+    }
+
+    public void DamageEnemy(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        gameObject.SetActive(false);
     }
 }

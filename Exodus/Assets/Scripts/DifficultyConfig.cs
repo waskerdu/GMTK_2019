@@ -7,11 +7,23 @@ using UnityEngine;
 
 public class DifficultyConfig : ScriptableObject
 {
-    [SerializeField] public int minEnemiesPerGroup;
     [SerializeField] public float timeBetweenWaves;
-    [SerializeField] public float swarmChance;
-    [SerializeField] public int rampSpeedEnemyNumber;
+    [Header("Enemies Per Group")]
+    [SerializeField] public int minEnemiesPerGroup;
+    [SerializeField] public int maxEnemiesPerGroup;
+    [SerializeField] public float rampSpeedEnemiesPerGroup;
+    [Header("Groups Per Wave")]
+    [SerializeField] public int minGroupsPerWave;
+    [SerializeField] public int maxGroupsPerWave;
+    [SerializeField] public float rampSpeedGroupsPerWave;
+    [Header("Swarm Chance")]
+    [SerializeField] [Range(0, 1)] public float minSwarmChance;
+    [SerializeField] [Range(0, 1)] public float maxSwarmChance;
     [SerializeField] public float rampSpeedSwarmChance;
-    [SerializeField] public float maxSwarmChance;
+    [Header("Stragglers")]
+    [SerializeField] public float stragglerSpawnRate;
+    [SerializeField] public float minStragglerSpawnTime;
+    [SerializeField] public float rampSpeedStragglerSpawnRate;
+
 
 }

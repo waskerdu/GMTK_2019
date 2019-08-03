@@ -234,11 +234,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyConfigs:
   - {fileID: 11400000, guid: bc39357213a87274d96664f8fb07bc35, type: 2}
-  spawnDistance: 10
+  spawnDistance: 14
   minEnemyGroupingDistance: 0.2
   maxEnemyGroupingDistance: 1.2
   enemy: {fileID: 6730991358984537902, guid: 5001d806ff7d1244096694a1e0e44714, type: 3}
-  currentWave: 8
+  currentWave: 0
 --- !u!4 &969514423
 Transform:
   m_ObjectHideFlags: 0

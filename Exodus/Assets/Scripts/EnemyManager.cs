@@ -13,23 +13,23 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] GameObject enemy;
     [SerializeField] int currentWave;
     DifficultyConfig difficultyConfig;
+    List<GameObject> enemyPool = new List<GameObject>();
     Vector3 planetPos = new Vector3(0,0,0);
-
+    float waveTimer = 3f;
+    float stragglerTimer = 3f;
 
 
     private void Awake()
     {
         SetDifficulty(0);
 
-        SpawnSingle();
-        SpawnGroup();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        WaveSpawning();
+        StragglerSpawning();
     }
 
     public void SetDifficulty(int difficulty)
@@ -55,22 +55,44 @@ public class EnemyManager : MonoBehaviour
     {
         var spawnPos = GetNewSpawnPos();
 
-        var enemiesThisGroup = difficultyConfig.minEnemiesPerGroup + (difficultyConfig.rampSpeedEnemyNumber * currentWave);
+        var enemiesThisGroup = Mathf.Min(difficultyConfig.minEnemiesPerGroup + (difficultyConfig.rampSpeedEnemiesPerGroup * currentWave), difficultyConfig.maxEnemiesPerGroup);
 
 
         for (int i = 0; i < enemiesThisGroup; i++)
         {
             var positionOffset = GetNewSpawnPos().normalized * Random.Range(minEnemyGroupingDistance, maxEnemyGroupingDistance);
-            var newEnemy = Instantiate(enemy, spawnPos + positionOffset, Quaternion.identity, transform);
+            var newEnemy = FindFirstInactiveEnemy();
+            if (!newEnemy)
+            {
+                newEnemy = Instantiate(enemy, spawnPos + positionOffset, Quaternion.identity, transform);
+                enemyPool.Add(newEnemy);
+            }
+            else
+            {
+                newEnemy.SetActive(true);
+                newEnemy.transform.position = spawnPos + positionOffset;
+            }
+            
 
         }
 
-        currentWave++;
+
     }
 
     void SpawnSingle()
     {
-        Instantiate(enemy, GetNewSpawnPos(), Quaternion.identity, transform);
+        var newEnemy = FindFirstInactiveEnemy();
+        if (!newEnemy)
+        {
+            newEnemy = Instantiate(enemy, GetNewSpawnPos(), Quaternion.identity, transform);
+            enemyPool.Add(newEnemy);
+        }
+        else
+        {
+            newEnemy.SetActive(true);
+            newEnemy.transform.position = GetNewSpawnPos();
+        }
+        
     }
 
     Vector3 GetNewSpawnPos()
@@ -83,6 +105,44 @@ public class EnemyManager : MonoBehaviour
         SpawnPos = SpawnDir.up * spawnDistance;
         Destroy(TempObject);
         return SpawnPos;
+    }
+
+    void WaveSpawning()
+    {
+        var groupsThisWave = Mathf.Min(difficultyConfig.minGroupsPerWave + Mathf.Round(difficultyConfig.rampSpeedGroupsPerWave * currentWave), difficultyConfig.maxGroupsPerWave);
+        waveTimer -= Time.deltaTime;
+        if (waveTimer < 0)
+        {
+            waveTimer = difficultyConfig.timeBetweenWaves;
+            for (int i = 0; i < groupsThisWave; i++)
+            {
+                SpawnGroup();
+            }
+            currentWave++;
+        }
+    }
+
+    void StragglerSpawning()
+    {
+        stragglerTimer -= Time.deltaTime;
+        if (stragglerTimer < 0)
+        {
+            stragglerTimer = Mathf.Max(difficultyConfig.stragglerSpawnRate - (currentWave * difficultyConfig.rampSpeedStragglerSpawnRate), difficultyConfig.minStragglerSpawnTime);
+            SpawnSingle();
+        }
+    }
+
+    GameObject FindFirstInactiveEnemy()
+    {
+        if (enemyPool.Count == 0)
+        {
+            return null;
+        }
+        foreach (GameObject enemy in enemyPool)
+        {
+            if (!enemy.activeInHierarchy) return enemy;
+        }
+        return null;
     }
 
 
