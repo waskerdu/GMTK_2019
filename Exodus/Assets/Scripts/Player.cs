@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     float timer = 0.0f;
     public float confirmTime = 1.0f;
     bool place = true;
+    bool ready = true;
     void Start()
     {
         playerRb = transform.GetChild(0).GetComponent<Rigidbody2D>();
@@ -37,13 +38,13 @@ public class Player : MonoBehaviour
         {
             place = true;
             timer = confirmTime;
-            //turretSystem.SendMessage("ShowGhostTurret",true);
+            turretSystem.SendMessage("ShowGhostTurret",true);
         }
         if(Input.GetButtonDown("Fire2"))
         {
             place = false;
             timer = confirmTime;
-            //turretSystem.SendMessage("ShowGhostTurret",true);
+            turretSystem.SendMessage("ShowGhostTurret",true);
         }
         if(Input.GetButton("Fire1") || Input.GetButton("Fire2"))
         {
@@ -53,16 +54,22 @@ public class Player : MonoBehaviour
             }
             else
             {
-                //if(place){turretSystem.SendMessage("PlaceTurret");}
-                //else{turretSystem.SendMessage("RemoveTurret");}
-                //turretSystem.SendMessage("ShowGhostTurret",false);
-                timer = 0.0f;
+                if (ready)
+                {
+                    if(place){turretSystem.SendMessage("PlaceTurret");}
+                    else{turretSystem.SendMessage("RemoveTurret");}
+                    turretSystem.SendMessage("ShowGhostTurret",false);
+                    timer = 0.0f;
+                    ready = false;
+                }
+                
             }
         }
         if(Input.GetButtonUp("Fire1") || Input.GetButtonUp("Fire2"))
         {
-            //turretSystem.SendMessage("ShowGhostTurret",false);
+            turretSystem.SendMessage("ShowGhostTurret",false);
             timer = 0.0f;
+            ready = true;
         }
         if(timer == 0.0f)
         {

@@ -371,16 +371,22 @@ MonoBehaviour:
     array:
     - type: 0
       sprite: {fileID: 7264854559847510478}
+      behaviour: {fileID: 11400000, guid: 76f0da799a387ce4a99b0ffabfe38506, type: 2}
     - type: 1
       sprite: {fileID: 7264854559823600574}
+      behaviour: {fileID: 0}
     - type: 2
       sprite: {fileID: 7264854560122906968}
+      behaviour: {fileID: 0}
     - type: 3
       sprite: {fileID: 7264854560745009767}
+      behaviour: {fileID: 0}
     - type: 4
       sprite: {fileID: 7264854560925865736}
+      behaviour: {fileID: 0}
     - type: 5
       sprite: {fileID: 7264854560458225689}
+      behaviour: {fileID: 0}
   boostSprite: {fileID: 7264854559205465062}
   boosted: 0
 --- !u!1 &7264854560458225691
