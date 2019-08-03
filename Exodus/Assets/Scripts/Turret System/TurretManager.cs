@@ -140,6 +140,11 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         return turretPositions[index];
     }
 
+    public void RemoveTurret()
+    {
+        RemoveTurret(GetTopPosition());
+    }
+
     public void RemoveTurret(TurretPosition pos)
     {
         foreach (Turret turret in pos.turrets)
@@ -161,11 +166,6 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
             foreach (TurretPosition position in positions)
                 position.SetTurretType(positions.Count);
         }
-    }
-
-    public void RemoveTurret()
-    {
-        RemoveTurret(GetTopPosition());
     }
 
     public void SetBiomeData(int[] biomes)

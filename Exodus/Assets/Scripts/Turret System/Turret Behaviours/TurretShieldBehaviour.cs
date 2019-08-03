@@ -14,16 +14,19 @@ public class TurretShieldBehaviour : TurretBehaviour
         shield = Instantiate(shieldPrefab, turret.transform);
         shield.behaviour = this;
         shield.transform.position = turret.bulletSpawnPoint.position;
+        TurretSoundManager.Instance.PlaySound("ShieldOn");
     }
 
     public void DestroyTurret()
     {
         turret.DestroyTurret();
+        TurretSoundManager.Instance.PlaySound("ShieldOff", true);
     }
 
     public override void Shutdown()
     {
         Destroy(shield.gameObject);
+        TurretSoundManager.Instance.PlaySound("ShieldOff", true);
         shield = null;
     }
 }

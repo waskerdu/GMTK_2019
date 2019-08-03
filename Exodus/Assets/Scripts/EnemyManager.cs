@@ -7,15 +7,16 @@ public class EnemyManager : MonoBehaviour
 {
 
     [SerializeField] List<DifficultyConfig> difficultyConfigs;
+    [SerializeField] int currentWave;
+    [SerializeField] GameObject enemy;
     [SerializeField] float spawnDistance = 10f;
     [SerializeField] float minEnemyGroupingDistance = 0.2f;
     [SerializeField] float maxEnemyGroupingDistance = 1.2f;
+
+    [Header("Warning")]
+    [SerializeField] GameObject warning;
     [SerializeField] float warningTime = 0.5f;
 
-    [SerializeField] GameObject enemy;
-    [SerializeField] GameObject warning;
-
-    [SerializeField] int currentWave;
 
     [Header("Sounds")]
     [SerializeField] AudioSource smallEnemyDamageSound;
@@ -34,6 +35,7 @@ public class EnemyManager : MonoBehaviour
     Vector3 planetPos = new Vector3(0,0,0);
     float waveTimer;
     float stragglerTimer;
+    bool gameOver = false;
 
 
     private void Awake()
@@ -46,6 +48,10 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameOver)
+        {
+            return;
+        }
         WaveSpawning();
         StragglerSpawning();
     }
@@ -57,11 +63,21 @@ public class EnemyManager : MonoBehaviour
 
     public void GameWon()
     {
+        gameOver = true;
 
+        foreach (var enemy in enemyPool)
+        {
+            if (!enemy.activeInHierarchy)
+            {
+                continue;
+            }
+            enemy.SendMessage("GameWon");
+        }
     }
 
     public void GameOver()
     {
+        gameOver = true;
         var enemies = GetComponentsInChildren<Enemy>();
         foreach (var enemy in enemies)
         {

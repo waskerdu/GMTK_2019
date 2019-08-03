@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turret: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
+  resourcesPerSecond: 1
+  planetDamagePerSecond: 1
+  soundName: TurretDrill

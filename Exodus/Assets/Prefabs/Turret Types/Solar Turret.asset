@@ -16,3 +16,4 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 0}
   resourcesPerSecond: 0.5
   planetDamagePerSecond: 0
+  soundName: 

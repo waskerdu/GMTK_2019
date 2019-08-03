@@ -23,6 +23,7 @@ public class Turret : MonoBehaviour, ITurretMessages
     public SpriteRenderer boostSprite;
     public Transform bulletSpawnPoint;
     public float multiplierPerBoost = 0.5f;
+    public float hitPoints = 10f;
     public int boosts;
 
     TurretBehaviour turretBehaviour;
@@ -81,6 +82,11 @@ public class Turret : MonoBehaviour, ITurretMessages
     public void DamagePlanet(float damage)
     {
         Debug.Log(string.Format("{0} damage dealt to {1}.", damage, name));
+        hitPoints -= damage;
+        if (hitPoints <= 0)
+        {
+            DestroyTurret();
+        }
     }
 
     public void DestroyTurret()
