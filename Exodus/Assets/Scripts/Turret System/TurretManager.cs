@@ -35,6 +35,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     public float turretHeightOffset = 0.5f;
     public int spokes = 20;
 
+    Rigidbody2D rb;
+
     GhostTurret ghostTurretInstance;
     TurretPositions turretPositions;
     List<Biome> biomeList;
@@ -89,7 +91,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         //Set biome data after we receive the biomes
         for (int i = 0; i < turretPositions.Count; i++)
             turretPositions[i].biome = biomeList[i];
-        
+        rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
     }
 
     public void GameWon()
@@ -128,7 +130,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public TurretPosition GetTopPosition()
     {
-        float rot = planet.transform.eulerAngles.z;
+        //float rot = planet.transform.eulerAngles.z;
+        float rot = rb.rotation;
         int index = Mathf.RoundToInt(Utilities.Map(rot >= 0 ? rot : 360f + rot, 0, 360f, 0, spokes)) % spokes;
         return turretPositions[index];
     }
