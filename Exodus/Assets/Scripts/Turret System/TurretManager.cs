@@ -86,6 +86,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         //Set biome data after we receive the biomes
         for (int i = 0; i < turretPositions.Count; i++)
             turretPositions[i].biome = biomeList[i];
+        
     }
 
     public void GameWon()
