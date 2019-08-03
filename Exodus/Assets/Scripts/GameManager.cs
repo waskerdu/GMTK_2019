@@ -11,15 +11,20 @@ public class GameManager : MonoBehaviour
     public GameObject turretManager;
     public GameObject planet;
     public GameObject enemyManager;
+    public GameObject wormhole;
     public int difficulty = 0;
     public bool inGame = false;
+    public bool gameOver = false;
     public bool skipMenu = false;
+    public float gameTime = 0.0f;
+    public float gameDuration = 300.0f;
     void Start()
     {
         //Time.timeScale = 0.0f;
         //mainMenu.SetActive(true);
         SelectMenu(0);
         if(skipMenu)LaunchGame();
+        
     }
 
     void StartIntro()
@@ -30,16 +35,11 @@ public class GameManager : MonoBehaviour
 
     void SlideshowFinished()
     {
-        if(inGame == false)
+        if(inGame == false && gameOver == false)
         {
             LaunchGame();
         }
         else{GiveUp();}
-    }
-
-    void GameOver()
-    {
-        // end game
     }
 
     void HideMenus()
@@ -100,14 +100,51 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale=1.0f;
         planet.SetActive(true);
+        wormhole.SetActive(false);
         enemyManager.SetActive(true);
         turretManager.SetActive(true);
         enemyManager.SendMessage("SetDifficulty",difficulty);
         turretManager.SendMessage("SetDifficulty",difficulty);
         HideMenus();
+        gameTime = gameDuration;
         //mainMenu.SetActive(false);
         
         inGame = true;
+    }
+
+    void GoodWin()
+    {
+        turretManager.SendMessage("GameWon");
+        enemyManager.SendMessage("GameWon");
+        planet.SetActive(false);
+        inGame = false;
+        gameOver = true;
+        SelectMenu(3);
+    }
+
+    void BadWin()
+    {
+        turretManager.SendMessage("GameWon");
+        enemyManager.SendMessage("GameWon");
+        planet.SetActive(false);
+        inGame = false;
+        gameOver = true;
+        SelectMenu(4);
+    }
+
+    void GameOver()
+    {
+        turretManager.SendMessage("GameWon");
+        enemyManager.SendMessage("GameWon");
+        planet.SetActive(false);
+        inGame = false;
+        gameOver = true;
+        SelectMenu(5);
+    }
+
+    void SpawnWormhole()
+    {
+        wormhole.SetActive(true);
     }
     void Update()
     {
@@ -126,6 +163,12 @@ public class GameManager : MonoBehaviour
                 SelectMenu(1);
                 Time.timeScale=0.0f;
             }
+        }
+        if(inGame)
+        {
+            if (gameTime > 0){gameTime-=Time.deltaTime;}
+            else{SpawnWormhole();}
+            if( (Vector3.zero-wormhole.transform.position).magnitude < 5  ){planet.SendMessage("Win");}
         }
     }
 }

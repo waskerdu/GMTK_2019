@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, IPlayerMessages
     public GameObject camObj;
     public GameObject materialUi;
     public GameObject integrityUi;
+    public GameObject gameManager;
     Slider slider;
     public float minZoom = 1.0f;
     public float maxZoom = 5.0f;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour, IPlayerMessages
     public float confirmTime = 1.0f;
     bool place = true;
     bool ready = true;
+    public float goodThreshold = 0.5f;
     void Start()
     {
         playerRb = transform.GetChild(0).GetComponent<Rigidbody2D>();
@@ -45,10 +47,18 @@ public class Player : MonoBehaviour, IPlayerMessages
         AddResources(0);
     }
 
+    public void Win()
+    {
+        gameManager.SendMessage("Health",integrity);
+        if (integrity>goodThreshold){gameManager.SendMessage("GoodWin");}
+        else{gameManager.SendMessage("BadWin");}
+    }
+
     // Update is called once per frame
     void Update()
     {
         planetRb.angularVelocity = Input.GetAxisRaw("Horizontal")*spinSpeed*Time.deltaTime;
+        if(integrity < 0){gameManager.SendMessage("GameOver");}
         if(Input.GetButtonDown("Jump")){playerRb.velocity=Vector2.up*jumpPower;}
         if(Input.GetButtonDown("Fire1"))
         {
