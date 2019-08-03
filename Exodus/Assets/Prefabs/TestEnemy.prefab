@@ -112,12 +112,15 @@ MonoBehaviour:
   isSwarmKing: 0
   kingScale: 1.5
   kingDamage: 3
+  swarmDistance: 5
   movementMode: 0
-  movementSpeed: 1
+  movementSpeed: 5
+  kingSpeed: 3.5
+  swarmSpeed: 8
   rotateSpeed: 1
   newWanderDirectionTime: 3
   wanderAccuracyAdjust: 1
-  beelineDistance: 4
+  beelineDistance: 40
   targetDir: {x: 0, y: 0, z: 0}
 --- !u!50 &8406353632554096691
 Rigidbody2D:
