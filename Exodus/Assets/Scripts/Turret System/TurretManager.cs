@@ -31,6 +31,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     public GameObject ghostTurret;
     public GameObject turretPositionPrefab;
     public ObjectPooler bulletPooler;
+    public ObjectPooler laserPooler;
+    public ObjectPooler rocketPooler;
     public Turret turretPrefab;
     public float turretHeightOffset = 0.5f;
     public int spokes = 20;
@@ -44,6 +46,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     private void Awake()
     {
         bulletPooler.InitializePool();
+        laserPooler.InitializePool();
+        rocketPooler.InitializePool();
 
         float theta = 360f / spokes;
         turretPositions = new TurretPositions();
@@ -78,10 +82,10 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
         List<int> biomeTesting = new List<int>();
 
-        for (int i = 0; i < spokes; i++)
-        {
-            biomeTesting.Add(0);
-        }
+        biomeTesting.Add(0);
+        biomeTesting.Add(1);
+        biomeTesting.Add(2);
+        biomeTesting.Add(3);
 
         SetBiomeData(biomeTesting.ToArray());
     }
@@ -90,7 +94,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     {
         //Set biome data after we receive the biomes
         for (int i = 0; i < turretPositions.Count; i++)
-            turretPositions[i].biome = biomeList[i];
+            turretPositions[i].biome = biomeList[Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1))];
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
     }
 
@@ -186,7 +190,6 @@ public class TurretPosition
         {
             if (i < turrets.Count - 1)
             {
-                Debug.Log("Boost Turret");
                 turrets[i].SetTurretType(Turret.TurretType.Boost);
             }
             else
@@ -262,7 +265,9 @@ public class ObjectPooler
 
         for (int i = 0; i < startingQuantity; i++)
         {
-            pool.Add(GameObject.Instantiate(prefab, parent.transform));
+            Bullet bullet = GameObject.Instantiate(prefab, parent.transform);
+            pool.Add(bullet);
+            bullet.gameObject.SetActive(false);
         }
     }
 
