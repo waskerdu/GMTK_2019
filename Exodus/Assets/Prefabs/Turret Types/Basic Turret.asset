@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turret: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
-  fireCoolDown: 0.5
+  fireCoolDown: 1.5
   bulletDamage: 13.5
   bulletType: 0
   trackTarget: 1
   enemyMask:
     serializedVersion: 2
     m_Bits: 2048
-  BoxCheckRadius: 0.25
+  BoxCheckRadius: 8

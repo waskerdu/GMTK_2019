@@ -27,6 +27,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public GameObject planet;
     public Transform turretDropPosition;
+    public GameObject biomeBlockPrefab;
     public LayerMask planetLayer;
     public GameObject ghostTurret;
     public GameObject turretPositionPrefab;
@@ -42,12 +43,16 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     GhostTurret ghostTurretInstance;
     TurretPositions turretPositions;
     List<Biome> biomeList;
+    //TODO: Remove this! update to use actual graphics!
+    List<Color> biomeTempColors;
 
     private void Awake()
     {
         bulletPooler.InitializePool();
         laserPooler.InitializePool();
         rocketPooler.InitializePool();
+
+        biomeTempColors = new List<Color>() { Color.green, Color.yellow, Color.cyan, Color.grey };
 
         float theta = 360f / spokes;
         turretPositions = new TurretPositions();
@@ -86,6 +91,22 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         biomeTesting.Add(1);
         biomeTesting.Add(2);
         biomeTesting.Add(3);
+        biomeTesting.Add(0);
+        biomeTesting.Add(1);
+        biomeTesting.Add(2);
+        biomeTesting.Add(3);
+        biomeTesting.Add(0);
+        biomeTesting.Add(1);
+        biomeTesting.Add(2);
+        biomeTesting.Add(3);
+        biomeTesting.Add(0);
+        biomeTesting.Add(1);
+        biomeTesting.Add(2);
+        biomeTesting.Add(3);
+        biomeTesting.Add(0);
+        biomeTesting.Add(1);
+        biomeTesting.Add(2);
+        biomeTesting.Add(3);
 
         SetBiomeData(biomeTesting.ToArray());
     }
@@ -94,7 +115,14 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     {
         //Set biome data after we receive the biomes
         for (int i = 0; i < turretPositions.Count; i++)
-            turretPositions[i].biome = biomeList[Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1))];
+        {
+            int biomeIndex = Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1));
+            turretPositions[i].biome = biomeList[biomeIndex];
+            GameObject biomeSprite = Instantiate(biomeBlockPrefab, planet.transform);
+            biomeSprite.transform.eulerAngles = new Vector3(0, 0, -360f / (biomeList.Count) * biomeIndex);
+            biomeSprite.transform.localPosition = new Vector3(0, 0, 0);
+            biomeSprite.GetComponentInChildren<SpriteRenderer>().color = biomeTempColors[(int)biomeList[biomeIndex]];
+        }
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
     }
 
