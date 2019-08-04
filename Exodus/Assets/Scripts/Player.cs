@@ -144,6 +144,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         //TODO: actually damage planet
         integrity-=damage*damageMultiplier;
         integrityUi.GetComponent<TextMeshProUGUI>().SetText((Mathf.Round(integrity*1000)/10).ToString()+"%");
+        gameManager.SendMessage("SetPlayerHealth",integrity);
     }
 
     public void AddResources(float resources)

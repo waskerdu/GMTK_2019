@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public AudioClip planetExplosionSound;
     public AudioClip[] music;
     public AudioSource audioSource;
+    public GameObject face;
+    public Sprite[] faceSprites;
     public int currentSong = 0;
     [Range(0,1)] public float planetExplosionSoundVolume = 1;
     public int difficulty = 0;
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
     public bool skipMenu = false;
     public float gameTime = 0.0f;
     public float gameDuration = 300.0f;
+    public float playerHealth = 1.0f;
+    public float healthThreshold = 0.3f;
     void Start()
     {
         //Time.timeScale = 0.0f;
@@ -33,6 +37,28 @@ public class GameManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = music[currentSong];
         audioSource.Play();
+    }
+
+    void SetPlayerHealth(float health)
+    {
+        if (health < 0.1f && !(playerHealth < 0.1f))
+        {
+            face.GetComponent<SpriteRenderer>().sprite=faceSprites[3]; // panick
+            audioSource.Stop();
+            currentSong = 4;
+            audioSource.clip = music[currentSong];
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else if (health < 0.25f && !(playerHealth < 0.25f))// alarm face
+        {
+            face.GetComponent<SpriteRenderer>().sprite=faceSprites[2];
+        }
+        else if (health < 0.5f && !(playerHealth < 0.5f)) // meh face
+        {
+            face.GetComponent<SpriteRenderer>().sprite=faceSprites[1];
+        }
+        playerHealth = health;
     }
 
     void StartIntro()
@@ -109,6 +135,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale=1.0f;
         planet.SetActive(true);
         wormhole.SetActive(false);
+
+        if(difficulty == 0){gameDuration *= 0.6f;}
         
         turretManager.SetActive(true);
         enemyManager.SetActive(true);
@@ -151,6 +179,11 @@ public class GameManager : MonoBehaviour
         planet.SetActive(false);
         planetExplosion.SetActive(true);
         AudioSource.PlayClipAtPoint(planetExplosionSound, Vector3.zero, planetExplosionSoundVolume );
+        audioSource.Stop();
+        currentSong = 6;
+        audioSource.clip = music[currentSong];
+        audioSource.PlayDelayed(6.0f);
+        audioSource.loop = false;
         inGame = false;
         gameOver = true;
         SelectMenu(5);
@@ -159,6 +192,11 @@ public class GameManager : MonoBehaviour
     void SpawnWormhole()
     {
         wormhole.SetActive(true);
+        audioSource.Stop();
+        currentSong = 5;
+        audioSource.clip = music[currentSong];
+        audioSource.Play();
+        audioSource.loop = false;
     }
     void Update()
     {
@@ -182,7 +220,13 @@ public class GameManager : MonoBehaviour
         {
             if (gameTime > 0){gameTime-=Time.deltaTime;}
             else{SpawnWormhole();}
-            if( (Vector3.zero-wormhole.transform.position).magnitude < 5  ){planet.SendMessage("Win");}
+            //Debug.Log((Vector3.zero-wormhole.transform.position).magnitude);
+            if( (Vector3.zero-wormhole.transform.position).magnitude < 50  )
+            {
+                Debug.Log("Got here");
+                if (playerHealth > healthThreshold){GoodWin();}
+                else{BadWin();}
+            }
         }
 
         if (currentSong == 0 && audioSource.isPlaying == false)
