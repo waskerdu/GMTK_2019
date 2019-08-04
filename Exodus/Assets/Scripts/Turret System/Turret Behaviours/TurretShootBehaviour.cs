@@ -104,7 +104,7 @@ public class TurretShootBehaviour : TurretBehaviour
         {
             bullet = TurretManager.Instance.laserPooler.Pop();
             bullet.transform.parent = turret.transform;
-            TurretSoundManager.Instance.PlaySound("LaserFire");
+            TurretSoundManager.Instance.PlaySound("Laser");
         }
 
         bullet.damage = bulletDamage * (1 + turret.GetBoostMultiplier());

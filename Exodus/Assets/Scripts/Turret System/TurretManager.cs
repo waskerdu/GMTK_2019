@@ -173,6 +173,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     public void RemoveTurret()
     {
         RemoveTurret(GetTopPosition());
+
+        TurretSoundManager.Instance.PlaySound("TurretDismantle", true);
     }
 
     public void RemoveTurret(TurretPosition pos)
@@ -196,8 +198,6 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
             foreach (TurretPosition position in positions)
                 position.SetTurretType(positions.Count);
         }
-
-        TurretSoundManager.Instance.PlaySound("TurretDismantle", true);
     }
 
     public void SetBiomeData(int[] biomes)

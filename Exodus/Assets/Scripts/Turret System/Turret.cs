@@ -92,6 +92,7 @@ public class Turret : MonoBehaviour, ITurretMessages
     public void DestroyTurret()
     {
         TurretManager.Instance.RemoveTurret(myPosition);
+        TurretSoundManager.Instance.PlaySound("TurretDestroyed", true);
     }
 }
 
