@@ -15,6 +15,11 @@ public class Player : MonoBehaviour, IPlayerMessages
     public GameObject materialUi;
     public GameObject integrityUi;
     public GameObject gameManager;
+    public AudioClip walkingSound;
+    [Range(0,1)]public float walkingSoundVolume = 1f;
+
+    public float walkingSoundTime = 0.4f;
+    float walkingSoundTimer = 0f;
     public List<Sprite> sprites;
     public SpriteRenderer playerSpriteRenderer;
     public float spriteSwapTime = 0.5f;
@@ -122,6 +127,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         zoom = Mathf.Clamp(zoom,0,1);
         cam.orthographicSize = (maxZoom-minZoom)*EaseInOutQuad(zoom)+minZoom;
         AnimateSprite();
+        PlayWalkingNoise();
     }
 
     float EaseOutQuad(float start, float end, float value)
@@ -148,6 +154,17 @@ public class Player : MonoBehaviour, IPlayerMessages
         materialUi.GetComponent<TextMeshProUGUI>().SetText("Material: "+(Mathf.Round(material*10)/10).ToString());
     }
 
+
+    void PlayWalkingNoise(){
+        if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0){
+            walkingSoundTimer -= Time.deltaTime;
+
+        }
+        if(walkingSoundTimer < 0){
+            walkingSoundTimer = walkingSoundTime;
+            AudioSource.PlayClipAtPoint(walkingSound, Vector3.zero, walkingSoundVolume);
+        }
+    }
     void AnimateSprite(){
         if(Input.GetAxisRaw("Horizontal") == 0){
             playerSpriteRenderer.sprite = sprites[0];
@@ -157,6 +174,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         else if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0){
             spriteSwapTimer -= Time.deltaTime;
             if(spriteSwapTimer < 0){
+                
                 spriteSwapTimer = spriteSwapTime;
                 if(currentSprite == 1){
                     currentSprite = 2;

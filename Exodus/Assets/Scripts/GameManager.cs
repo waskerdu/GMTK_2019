@@ -138,8 +138,8 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        turretManager.SendMessage("GameWon");
-        enemyManager.SendMessage("GameWon");
+        turretManager.SendMessage("GameOver");
+        enemyManager.SendMessage("GameOver");
         planet.SetActive(false);
         planetExplosion.SetActive(true);
         AudioSource.PlayClipAtPoint(planetExplosionSound, Vector3.zero, planetExplosionSoundVolume );
