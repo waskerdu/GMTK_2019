@@ -98,7 +98,7 @@ public class Enemy : MonoBehaviour
                 break;
 
             case MovementMode.GameWon:
-                targetDir = -1 * (swarmKing.transform.position - transform.position).normalized;
+                targetDir = -1 * (planetPos - transform.position).normalized;
                 break;
         }
         SetRotation();
