@@ -34,6 +34,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     public ObjectPooler laserPooler;
     public ObjectPooler rocketPooler;
     public Transform worldBiomes;
+    public List<Transform> biomeMasks;
     public Turret turretPrefab;
     public float turretHeightOffset = 0.5f;
     public int spokes = 20;
@@ -109,7 +110,16 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     private void Start()
     {
+
         //Set biome data after we receive the biomes
+        for (int i = 0; i < biomeList.Count; i++)
+        {
+            //instantiate mask
+            //rotate it by 360f / biomeList.Count * i
+            Transform maskTransform = Instantiate(biomeMasks[(int)biomeList[i]], worldBiomes);
+            maskTransform.localEulerAngles = new Vector3(0, 0, -360f / biomeList.Count * i);
+        }
+
         for (int i = 0; i < turretPositions.Count; i++)
         {
             int biomeIndex = Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1));
@@ -119,11 +129,13 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
             //biomeSprite.transform.localPosition = new Vector3(0, 0, 0);
             //biomeSprite.GetComponentInChildren<SpriteRenderer>().color = biomeTempColors[(int)biomeList[biomeIndex]];
 
+            /*
             Transform biome = worldBiomes.GetChild(biomeIndex);
             for (int j = 0; j < 4; j++)
             {
                 biome.GetChild(j).gameObject.SetActive(j == (int)biomeList[biomeIndex]);
             }
+            */
         }
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
         worldBiomes.parent = planet.transform;
