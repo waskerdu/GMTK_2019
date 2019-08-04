@@ -40,7 +40,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
-        SetDifficulty(0);
+        //SetDifficulty(0);
         waveTimer = difficultyConfig.beginningSpawnDelay;
         stragglerTimer = waveTimer;
     }
