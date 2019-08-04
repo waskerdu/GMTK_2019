@@ -206,6 +206,18 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         foreach (int biome in biomes)
             biomeList.Add((Biome)biome);
     }
+
+    public void GameOver()
+    {
+        Debug.Log("Turret Manager: Game Over!");
+        foreach (TurretPosition position in turretPositions)
+        {
+            RemoveTurret(position);
+            Destroy(position.positionObject);
+        }
+
+        turretPositions = new TurretPositions();
+    }
 }
 
 [System.Serializable]
@@ -334,5 +346,6 @@ public interface ITurretManagerMessages : IEventSystemHandler
     void RemoveTurret();
     void SetDifficulty(int difficulty);
     void GameWon();
+    void GameOver();
     void SetBiomeData(int[] biomes);
 }
