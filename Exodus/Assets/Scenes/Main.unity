@@ -10973,7 +10973,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 701416249770203389}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1702937400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -11108,8 +11107,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
-=======
->>>>>>> 2560c3bc4ac8e9ba9609a761e3eeb6e6df4f9eed
 --- !u!1 &1855715656
 GameObject:
   m_ObjectHideFlags: 0
