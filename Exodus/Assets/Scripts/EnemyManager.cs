@@ -40,7 +40,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
-        //SetDifficulty(0);
+        SetDifficulty(0);
         waveTimer = difficultyConfig.beginningSpawnDelay;
         stragglerTimer = waveTimer;
     }
@@ -125,7 +125,7 @@ public class EnemyManager : MonoBehaviour
     private void Warning(Vector3 spawnPos)
     {
         WarningSound();
-        var warningPos = spawnPos / 2f;
+        var warningPos = spawnPos / 7f;
         var warningObject = Instantiate(warning, warningPos, Quaternion.LookRotation(Vector3.forward, spawnPos));
         Destroy(warningObject, warningTime);
     }

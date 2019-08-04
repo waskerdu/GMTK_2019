@@ -1321,7 +1321,7 @@ PrefabInstance:
     - target: {fileID: 8220554039953835532, guid: 84873d989bb3b4842a5407dcf8df802c,
         type: 3}
       propertyPath: spawnDistance
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84873d989bb3b4842a5407dcf8df802c, type: 3}
@@ -8533,6 +8533,8 @@ MonoBehaviour:
   planetExplosion: {fileID: 1702937400}
   enemyManager: {fileID: 2030287815}
   wormhole: {fileID: 1221486796}
+  planetExplosionSound: {fileID: 0}
+  planetExplosionSoundVolume: 1
   difficulty: 0
   inGame: 0
   gameOver: 0
