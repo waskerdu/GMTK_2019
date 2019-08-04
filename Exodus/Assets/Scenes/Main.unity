@@ -1255,6 +1255,11 @@ PrefabInstance:
       propertyPath: spawnDistance
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 8220554039780836477, guid: 84873d989bb3b4842a5407dcf8df802c,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.343
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84873d989bb3b4842a5407dcf8df802c, type: 3}
 --- !u!1 &393273784
@@ -8364,7 +8369,8 @@ MonoBehaviour:
   planetExplosion: {fileID: 1702937400}
   enemyManager: {fileID: 2030287815}
   wormhole: {fileID: 1221486796}
-  planetExplosionSound: {fileID: 0}
+  planetExplosionSound: {fileID: 8300000, guid: c692f5e9b0f3a344299d002d0ad8a047,
+    type: 3}
   planetExplosionSoundVolume: 1
   difficulty: 0
   inGame: 0
@@ -9300,7 +9306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221486796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.03, y: 0, z: 0}
+  m_LocalPosition: {x: 100, y: 0, z: 36}
   m_LocalScale: {x: 8, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 2076594456}
@@ -9355,9 +9361,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d6b4f56b3e2a59a4d991536aaddaaaa4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6262ca5c39e8e214297d9923494347b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 5.12, y: 5.12}
@@ -15959,12 +15965,15 @@ MonoBehaviour:
   materialUi: {fileID: 905819948}
   integrityUi: {fileID: 2008023124}
   gameManager: {fileID: 774946916}
+  walkingSound: {fileID: 8300000, guid: 6c2c31d304f8e674aa04bfac1d3a96e7, type: 3}
+  walkingSoundVolume: 1
+  walkingSoundTime: 0.4
   sprites:
   - {fileID: 21300000, guid: 9cf4a502e2e54c84294e7f754fe46602, type: 3}
   - {fileID: 21300000, guid: 27da17487d35d63419d3a282f587edad, type: 3}
   - {fileID: 21300000, guid: ac8b9de646f4b8046973a563e9c65820, type: 3}
   playerSpriteRenderer: {fileID: 263323648}
-  spriteSwapTime: 0.5
+  spriteSwapTime: 0.3
   minZoom: 1
   maxZoom: 40
   zoomSpeed: 1
