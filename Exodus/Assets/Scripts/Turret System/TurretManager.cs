@@ -27,13 +27,13 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public GameObject planet;
     public Transform turretDropPosition;
-    public GameObject biomeBlockPrefab;
     public LayerMask planetLayer;
     public GameObject ghostTurret;
     public GameObject turretPositionPrefab;
     public ObjectPooler bulletPooler;
     public ObjectPooler laserPooler;
     public ObjectPooler rocketPooler;
+    public Transform worldBiomes;
     public Turret turretPrefab;
     public float turretHeightOffset = 0.5f;
     public int spokes = 20;
@@ -43,16 +43,12 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
     GhostTurret ghostTurretInstance;
     TurretPositions turretPositions;
     List<Biome> biomeList;
-    //TODO: Remove this! update to use actual graphics!
-    List<Color> biomeTempColors;
 
     private void Awake()
     {
         bulletPooler.InitializePool();
         laserPooler.InitializePool();
         rocketPooler.InitializePool();
-
-        biomeTempColors = new List<Color>() { Color.green, Color.yellow, Color.cyan, Color.grey };
 
         float theta = 360f / spokes;
         turretPositions = new TurretPositions();
@@ -118,12 +114,19 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         {
             int biomeIndex = Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1));
             turretPositions[i].biome = biomeList[biomeIndex];
-            GameObject biomeSprite = Instantiate(biomeBlockPrefab, planet.transform);
-            biomeSprite.transform.eulerAngles = new Vector3(0, 0, -360f / (biomeList.Count) * biomeIndex);
-            biomeSprite.transform.localPosition = new Vector3(0, 0, 0);
-            biomeSprite.GetComponentInChildren<SpriteRenderer>().color = biomeTempColors[(int)biomeList[biomeIndex]];
+            //GameObject biomeSprite = Instantiate(biomeBlockPrefab, planet.transform);
+            //biomeSprite.transform.eulerAngles = new Vector3(0, 0, -360f / (biomeList.Count) * biomeIndex);
+            //biomeSprite.transform.localPosition = new Vector3(0, 0, 0);
+            //biomeSprite.GetComponentInChildren<SpriteRenderer>().color = biomeTempColors[(int)biomeList[biomeIndex]];
+
+            Transform biome = worldBiomes.GetChild(biomeIndex);
+            for (int j = 0; j < 4; j++)
+            {
+                biome.GetChild(j).gameObject.SetActive(j == (int)biomeList[biomeIndex]);
+            }
         }
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
+        worldBiomes.parent = planet.transform;
     }
 
     public void GameWon()

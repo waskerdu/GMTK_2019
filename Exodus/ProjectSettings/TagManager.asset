@@ -44,3 +44,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Biomes
+    uniqueID: 2114730571
+    locked: 0
+  - name: Biome Cover
+    uniqueID: 3828427579
+    locked: 0
+  - name: Turret
+    uniqueID: 2442775287
+    locked: 0
+  - name: Player
+    uniqueID: 2943854661
+    locked: 0
