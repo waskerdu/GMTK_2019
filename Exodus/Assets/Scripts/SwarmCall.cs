@@ -23,4 +23,9 @@ public class SwarmCall : MonoBehaviour
             collision.gameObject.SendMessage("Swarm", GetComponentInParent<Enemy>().gameObject);
         }
     }
+
+    public void DamageEnemy(float damage)
+    {
+        return;
+    }
 }

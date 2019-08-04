@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 574363686506306673}
   m_Layer: 0
   m_Name: SwarmCall
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4137005512708091212
 Transform:
   m_ObjectHideFlags: 0
@@ -115,9 +115,9 @@ MonoBehaviour:
   deathParticles: {fileID: 1602828790699299597, guid: ab4171321ab4c4d479fd7e37cbab22c3,
     type: 3}
   isSwarmKing: 0
-  kingScale: 3
+  kingScale: 5
   kingDamage: 3
-  swarmDistance: 5
+  swarmDistance: 60
   movementMode: 0
   movementSpeed: 5
   kingSpeed: 3.5

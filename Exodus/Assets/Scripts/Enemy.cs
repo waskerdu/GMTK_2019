@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] float newWanderDirectionTime = 3f;
     [SerializeField] float wanderAccuracyAdjust = 4f;
     [SerializeField] float beelineDistance = 4f;
-    bool gameWon = false;
     public Vector3 targetDir = new Vector3();
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
@@ -68,6 +67,11 @@ public class Enemy : MonoBehaviour
     void CheckDistanceToPlanet()
     {
         if ((planetPos - transform.position).magnitude < beelineDistance)
+        {
+            movementMode = MovementMode.Beeline;
+        }
+
+        if (movementMode == MovementMode.Swarm && (swarmKing.transform.position - transform.position).magnitude > beelineDistance)
         {
             movementMode = MovementMode.Beeline;
         }
