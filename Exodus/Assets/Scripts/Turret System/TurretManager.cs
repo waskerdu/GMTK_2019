@@ -94,13 +94,15 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     private void Start()
     {
+        bool hasPlacedSolar = false;
 
         //Set biome data after we receive the biomes
         for (int i = 0; i < biomeList.Count; i++)
         {
             //instantiate mask
             //rotate it by 360f / biomeList.Count * i
-            Transform maskTransform = Instantiate(biomeMasks[(int)biomeList[i]], worldBiomes);
+            Biome biome = biomeList[i];
+            Transform maskTransform = Instantiate(biomeMasks[(int)biome], worldBiomes);
             maskTransform.localEulerAngles = new Vector3(0, 0, -360f / biomeList.Count * i);
         }
 
@@ -108,9 +110,17 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         {
             int biomeIndex = Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1));
             turretPositions[i].biome = biomeList[biomeIndex];
+
+            if (!hasPlacedSolar && biomeList[biomeIndex] == Biome.Desert)
+            {
+                hasPlacedSolar = true;
+                PlaceTurret(turretPositions[i]);
+            }
         }
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
         worldBiomes.parent = planet.transform;
+
+        //
     }
 
     public void GameWon()
@@ -131,8 +141,11 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public void PlaceTurret()
     {
-        TurretPosition pos = GetTopPosition();
+        PlaceTurret(GetTopPosition());
+    }
 
+    public void PlaceTurret(TurretPosition pos)
+    {
         Turret newTurret = Instantiate(turretPrefab, pos.positionObject.transform);
         newTurret.transform.localRotation = Quaternion.identity;
         newTurret.transform.localPosition = new Vector3(0, turretHeightOffset * pos.turrets.Count, 0);
