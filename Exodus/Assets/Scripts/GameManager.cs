@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     //public GameObject pauseMenu;
     public GameObject turretManager;
     public GameObject planet;
+    public GameObject planetExplosion;
     public GameObject enemyManager;
     public GameObject wormhole;
     public int difficulty = 0;
@@ -137,6 +138,7 @@ public class GameManager : MonoBehaviour
         turretManager.SendMessage("GameWon");
         enemyManager.SendMessage("GameWon");
         planet.SetActive(false);
+        planetExplosion.SetActive(true);
         inGame = false;
         gameOver = true;
         SelectMenu(5);
