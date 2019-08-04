@@ -51,9 +51,7 @@ public class Enemy : MonoBehaviour
 
     public void GameOver()
     {
-        movementSpeed *= 1.8f;
-        movementMode = MovementMode.Beeline;
-        isSwarmKing = false;
+        GameWon();
     }
 
     public void GameWon()
