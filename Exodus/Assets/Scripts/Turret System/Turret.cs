@@ -26,7 +26,7 @@ public class Turret : MonoBehaviour, ITurretMessages
     public float hitPoints = 10f;
     public int boosts;
 
-    TurretBehaviour turretBehaviour;
+    [HideInInspector] public TurretBehaviour turretBehaviour;
     [HideInInspector] public TurretPosition myPosition;
 
     private void Awake()

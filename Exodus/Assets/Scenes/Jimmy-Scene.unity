@@ -2901,9 +2901,13 @@ MonoBehaviour:
   turretManager: {fileID: 1090682887}
   planet: {fileID: 2076594455}
   enemyManager: {fileID: 0}
+  wormhole: {fileID: 0}
   difficulty: 0
   inGame: 0
+  gameOver: 0
   skipMenu: 0
+  gameTime: 0
+  gameDuration: 300
 --- !u!1 &822983618
 GameObject:
   m_ObjectHideFlags: 0
@@ -4567,6 +4571,7 @@ MonoBehaviour:
   camObj: {fileID: 519420028}
   materialUi: {fileID: 905819948}
   integrityUi: {fileID: 2008023124}
+  gameManager: {fileID: 0}
   minZoom: 0.15
   maxZoom: 5
   zoomSpeed: 1
@@ -4580,6 +4585,7 @@ MonoBehaviour:
   numOceans: 5
   numMountains: 3
   confirmTime: 1
+  goodThreshold: 0.5
 --- !u!82 &2076594458
 AudioSource:
   m_ObjectHideFlags: 0

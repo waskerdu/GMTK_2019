@@ -32,38 +32,17 @@ public class TurretShootBehaviour : TurretBehaviour
         {
             timeSinceLastFire = 0;
 
-            if (!trackTarget) Fire();
+            if (!trackTarget) Fire(null);
             else
             {
                 //Physics cast to find enemy in range
                 //if we find one
                 //  point bulletSpawn at enemy
                 //  Fire
-                RaycastHit2D[] hits = Physics2D.BoxCastAll(turret.transform.position + turret.transform.forward * BoxCheckRadius,
-                                                           new Vector2(BoxCheckRadius * 2, BoxCheckRadius * 2),
-                                                           turret.transform.eulerAngles.z + 45f,
-                                                           turret.transform.up, 0.0001f,
-                                                           enemyMask);
-
-                if (hits.Length > 0)
+                Transform closest = GetClosestInSight();
+                if (closest != null)
                 {
-                    Transform closest = hits[0].transform;
-                    float dist = Vector2.Distance(closest.position, turret.transform.position);
-
-                    for (int i = 1; i < hits.Length; i++)
-                    {
-                        Transform check = hits[0].transform;
-                        float newDist = Vector2.Distance(hits[0].transform.position, turret.transform.position);
-                        if (newDist < dist)
-                        {
-                            closest = check;
-                            dist = newDist;
-                        }
-                    }
-
-                    bulletSpawnPoint.up = closest.position - bulletSpawnPoint.position;
-
-                    Fire();
+                    Fire(closest);
                 }
             }
         }
@@ -71,7 +50,38 @@ public class TurretShootBehaviour : TurretBehaviour
             timeSinceLastFire += Time.deltaTime;
     }
 
-    public void Fire()
+    public Transform GetClosestInSight()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(turret.transform.position + turret.transform.up * BoxCheckRadius,
+                                                   new Vector2(BoxCheckRadius * 2, BoxCheckRadius * 2),
+                                                   0,//turret.transform.eulerAngles.z + 45f,
+                                                   turret.transform.up,
+                                                   BoxCheckRadius,
+                                                   enemyMask);
+
+        if (hits.Length > 0)
+        {
+            Transform closest = hits[0].transform;
+            float dist = Vector2.Distance(closest.position, turret.transform.position);
+
+            for (int i = 1; i < hits.Length; i++)
+            {
+                Transform check = hits[0].transform;
+                float newDist = Vector2.Distance(hits[0].transform.position, turret.transform.position);
+                if (newDist < dist)
+                {
+                    closest = check;
+                    dist = newDist;
+                }
+            }
+
+            return closest;
+        }
+
+        return null;
+    }
+
+    public void Fire(Transform target)
     {
         Bullet bullet;
 
@@ -79,12 +89,13 @@ public class TurretShootBehaviour : TurretBehaviour
         {
             bullet = TurretManager.Instance.bulletPooler.Pop();
             bullet.transform.parent = null;
+            bulletSpawnPoint.up = target.position - bulletSpawnPoint.position;
             TurretSoundManager.Instance.PlaySound("TurretFire");
         }
         else if (bulletType == BulletType.Rocket)
         {
             Rocket rocket = TurretManager.Instance.rocketPooler.Pop() as Rocket;
-            rocket.target = GameObject.Find("Damage Test")?.transform;
+            rocket.target = target;
             bullet = rocket;
             bullet.transform.parent = null;
             TurretSoundManager.Instance.PlaySound("RocketFire");
