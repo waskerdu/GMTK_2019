@@ -11792,7 +11792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862b9da73ca8514469e7e00717baf612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spinSpeed: 3000
+  spinSpeed: 12000
   jumpPower: 2
   turretSystem: {fileID: 1090682887}
   sliderObj: {fileID: 1335747081}
