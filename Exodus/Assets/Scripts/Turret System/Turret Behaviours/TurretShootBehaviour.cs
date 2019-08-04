@@ -52,11 +52,12 @@ public class TurretShootBehaviour : TurretBehaviour
 
     public Transform GetClosestInSight()
     {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(turret.transform.position + turret.transform.forward * BoxCheckRadius,
-                                                           new Vector2(BoxCheckRadius * 2, BoxCheckRadius * 2),
-                                                           turret.transform.eulerAngles.z + 45f,
-                                                           turret.transform.up, 0.0001f,
-                                                           enemyMask);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(turret.transform.position + turret.transform.up * BoxCheckRadius,
+                                                   new Vector2(BoxCheckRadius * 2, BoxCheckRadius * 2),
+                                                   0,//turret.transform.eulerAngles.z + 45f,
+                                                   turret.transform.up,
+                                                   BoxCheckRadius,
+                                                   enemyMask);
 
         if (hits.Length > 0)
         {

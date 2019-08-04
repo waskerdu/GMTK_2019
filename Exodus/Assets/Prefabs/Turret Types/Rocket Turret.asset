@@ -21,4 +21,4 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 2048
-  BoxCheckRadius: 6
+  BoxCheckRadius: 3

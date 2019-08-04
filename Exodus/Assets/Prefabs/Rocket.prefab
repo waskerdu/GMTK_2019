@@ -162,6 +162,7 @@ MonoBehaviour:
   damage: 0
   target: {fileID: 0}
   turnSpeed: 80
+  maxTargetDistance: 100
 --- !u!61 &7865454852211802945
 BoxCollider2D:
   m_ObjectHideFlags: 0
