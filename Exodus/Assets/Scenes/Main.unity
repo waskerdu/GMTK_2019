@@ -6461,11 +6461,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret Controller
       objectReference: {fileID: 0}
-    - target: {fileID: 3272325701314337032, guid: 9ebbc8d282a5f9940ac0f1df71751707,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3272325701314337034, guid: 9ebbc8d282a5f9940ac0f1df71751707,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6526,16 +6521,6 @@ PrefabInstance:
       propertyPath: planet
       value: 
       objectReference: {fileID: 83282511}
-    - target: {fileID: 3272325701314337035, guid: 9ebbc8d282a5f9940ac0f1df71751707,
-        type: 3}
-      propertyPath: turretHeightOffset
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3272325701427034513, guid: 9ebbc8d282a5f9940ac0f1df71751707,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 9.84
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ebbc8d282a5f9940ac0f1df71751707, type: 3}
 --- !u!1 &508326843
