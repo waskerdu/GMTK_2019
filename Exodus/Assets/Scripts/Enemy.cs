@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     enum MovementMode {Wander, Beeline, Swarm, GameWon};
     Vector3 planetPos = new Vector3(0,0,0);
 
-    [SerializeField] float health = 3f;
+    [SerializeField] float maxHealth = 3f;
+    float health;
     [SerializeField] float damage = 1f;
     [SerializeField] List<Sprite> sprites;
     [SerializeField] GameObject deathParticles;
@@ -233,6 +234,7 @@ public class Enemy : MonoBehaviour
         transform.localScale = originalScaling;
         movementMode = MovementMode.Wander;
         GetComponentInChildren<SwarmCall>(true).gameObject.SetActive(false);
+        health = maxHealth;
         gameObject.SetActive(false);
     }
 
