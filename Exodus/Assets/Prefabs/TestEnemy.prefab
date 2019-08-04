@@ -109,8 +109,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   damage: 1
+  sprites:
+  - {fileID: 21300000, guid: 2efecaa6e2820a04b80c7a273a829a2b, type: 3}
+  - {fileID: 21300000, guid: a81ba458b08f7c54c9e769682133c30e, type: 3}
   isSwarmKing: 0
-  kingScale: 4.5
+  kingScale: 3
   kingDamage: 3
   swarmDistance: 5
   movementMode: 0

@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] float health = 3f;
     [SerializeField] float damage = 1f;
+    [SerializeField] List<Sprite> sprites;
     [Header("Swarming")]
     [SerializeField] bool isSwarmKing = false;
     [SerializeField] float kingScale = 1.5f;
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour
     bool gameWon = false;
     public Vector3 targetDir = new Vector3();
     Rigidbody2D rb;
+    SpriteRenderer spriteRenderer;
     float directionChangeTimer = 0f;
     GameObject swarmKing;
     Vector3 originalScaling;
@@ -37,6 +39,8 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         originalScaling = transform.localScale;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprites[0];
     }
 
     // Update is called once per frame
@@ -190,6 +194,8 @@ public class Enemy : MonoBehaviour
 
     public void DamageEnemy(float damage)
     {
+        spriteRenderer.sprite = sprites[1];
+
         if (isSwarmKing)
         {
             SendMessageUpwards("BigDamageSound");
@@ -209,6 +215,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        spriteRenderer.sprite = sprites[0];
         if (isSwarmKing)
         {
             SendMessageUpwards("BigDeathSound");
