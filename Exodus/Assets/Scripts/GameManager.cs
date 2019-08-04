@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public GameObject enemyManager;
     public GameObject wormhole;
     public AudioClip planetExplosionSound;
+    public AudioClip[] music;
+    public AudioSource audioSource;
+    public int currentSong = 0;
     [Range(0,1)] public float planetExplosionSoundVolume = 1;
     public int difficulty = 0;
     public bool inGame = false;
@@ -27,7 +30,9 @@ public class GameManager : MonoBehaviour
         //mainMenu.SetActive(true);
         SelectMenu(0);
         if(skipMenu)LaunchGame();
-        
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = music[currentSong];
+        audioSource.Play();
     }
 
     void StartIntro()
@@ -112,7 +117,10 @@ public class GameManager : MonoBehaviour
         HideMenus();
         gameTime = gameDuration;
         //mainMenu.SetActive(false);
-        
+        currentSong=2;
+        audioSource.clip = music[currentSong];
+        audioSource.Play();
+        audioSource.loop = false;
         inGame = true;
     }
 
@@ -175,6 +183,21 @@ public class GameManager : MonoBehaviour
             if (gameTime > 0){gameTime-=Time.deltaTime;}
             else{SpawnWormhole();}
             if( (Vector3.zero-wormhole.transform.position).magnitude < 5  ){planet.SendMessage("Win");}
+        }
+
+        if (currentSong == 0 && audioSource.isPlaying == false)
+        {
+            currentSong++;
+            audioSource.clip = music[currentSong];
+            audioSource.Play();
+            audioSource.loop = true;
+        }
+        if (currentSong == 2 && audioSource.isPlaying == false)
+        {
+            currentSong++;
+            audioSource.clip = music[currentSong];
+            audioSource.Play();
+            audioSource.loop = true;
         }
     }
 }
