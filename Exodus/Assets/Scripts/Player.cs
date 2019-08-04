@@ -15,6 +15,11 @@ public class Player : MonoBehaviour, IPlayerMessages
     public GameObject materialUi;
     public GameObject integrityUi;
     public GameObject gameManager;
+    public List<Sprite> sprites;
+    public SpriteRenderer playerSpriteRenderer;
+    public float spriteSwapTime = 0.5f;
+    float spriteSwapTimer;
+    int currentSprite = 0;
     Slider slider;
     public float minZoom = 1.0f;
     public float maxZoom = 5.0f;
@@ -116,6 +121,7 @@ public class Player : MonoBehaviour, IPlayerMessages
         zoom-=Input.GetAxisRaw("Vertical") * zoomSpeed * Time.deltaTime;
         zoom = Mathf.Clamp(zoom,0,1);
         cam.orthographicSize = (maxZoom-minZoom)*EaseInOutQuad(zoom)+minZoom;
+        AnimateSprite();
     }
 
     float EaseOutQuad(float start, float end, float value)
@@ -140,6 +146,36 @@ public class Player : MonoBehaviour, IPlayerMessages
         //TODO: actually add resources
         material+=resources;
         materialUi.GetComponent<TextMeshProUGUI>().SetText("Material: "+(Mathf.Round(material*10)/10).ToString());
+    }
+
+    void AnimateSprite(){
+        if(Input.GetAxisRaw("Horizontal") == 0){
+            playerSpriteRenderer.sprite = sprites[0];
+            spriteSwapTimer = 0;
+            currentSprite = 0;
+        }
+        else if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0){
+            spriteSwapTimer -= Time.deltaTime;
+            if(spriteSwapTimer < 0){
+                spriteSwapTimer = spriteSwapTime;
+                if(currentSprite == 1){
+                    currentSprite = 2;
+                    playerSpriteRenderer.sprite = sprites[2];
+                }
+                else{
+                    currentSprite = 1;
+                    playerSpriteRenderer.sprite = sprites[1];
+                }
+            }
+        }
+
+        if(Input.GetAxisRaw("Horizontal") < 0){
+            playerSpriteRenderer.flipX = true;
+        }
+        else{
+            playerSpriteRenderer.flipX = false;
+        }
+
     }
 }
 
