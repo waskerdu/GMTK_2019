@@ -133,7 +133,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public void SetDifficulty(int difficulty)
     {
-        Debug.Log(string.Format("Turret Manager: Difficulty set to {0}.", difficulty));
+        //Debug.Log(string.Format("Turret Manager: Difficulty set to {0}.", difficulty));
     }
 
     public void ShowGhostTurret(bool toShow = true)
@@ -209,7 +209,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public void GameOver()
     {
-        Debug.Log("Turret Manager: Game Over!");
+        //Debug.Log("Turret Manager: Game Over!");
         foreach (TurretPosition position in turretPositions)
         {
             RemoveTurret(position);
