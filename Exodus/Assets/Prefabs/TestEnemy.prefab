@@ -115,7 +115,7 @@ MonoBehaviour:
   deathParticles: {fileID: 1602828790699299597, guid: ab4171321ab4c4d479fd7e37cbab22c3,
     type: 3}
   isSwarmKing: 0
-  kingScale: 5
+  kingScale: 6.5
   kingDamage: 3
   swarmDistance: 60
   movementMode: 0
