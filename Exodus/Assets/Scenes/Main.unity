@@ -11815,7 +11815,7 @@ MonoBehaviour:
   zoom: 0.5
   material: 3
   integrity: 1
-  damageMultiplier: 0.05
+  damageMultiplier: 0.03
   biomeSpriteObj: {fileID: 0}
   numForests: 7
   numDeserts: 5
