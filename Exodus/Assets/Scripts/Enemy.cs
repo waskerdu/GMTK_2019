@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] float health = 3f;
     [SerializeField] float damage = 1f;
     [SerializeField] List<Sprite> sprites;
+    [SerializeField] GameObject deathParticles;
+
     [Header("Swarming")]
     [SerializeField] bool isSwarmKing = false;
     [SerializeField] float kingScale = 1.5f;
@@ -213,6 +215,8 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        var particles = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        Destroy(particles, 4);
         spriteRenderer.sprite = sprites[0];
         if (isSwarmKing)
         {

@@ -107,11 +107,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e236f27a586f3408062f613c7ef9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 25
   damage: 1
   sprites:
   - {fileID: 21300000, guid: 2efecaa6e2820a04b80c7a273a829a2b, type: 3}
   - {fileID: 21300000, guid: a81ba458b08f7c54c9e769682133c30e, type: 3}
+  deathParticles: {fileID: 1602828790699299597, guid: ab4171321ab4c4d479fd7e37cbab22c3,
+    type: 3}
   isSwarmKing: 0
   kingScale: 3
   kingDamage: 3
