@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4ccb0b848602246b06bb6247252ddc, type: 3}
   m_Name: Hard
   m_EditorClassIdentifier: 
-  timeBetweenWaves: 12
+  timeBetweenWaves: 10
   beginningSpawnDelay: 0
   minEnemiesPerGroup: 2
   maxEnemiesPerGroup: 12
