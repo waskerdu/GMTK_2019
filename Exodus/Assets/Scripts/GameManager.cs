@@ -191,12 +191,14 @@ public class GameManager : MonoBehaviour
 
     void SpawnWormhole()
     {
+        if(wormhole.activeInHierarchy)return;
         wormhole.SetActive(true);
         audioSource.Stop();
         currentSong = 5;
         audioSource.clip = music[currentSong];
         audioSource.Play();
         audioSource.loop = false;
+        Debug.Log(wormhole.activeInHierarchy);
     }
     void Update()
     {
@@ -218,7 +220,7 @@ public class GameManager : MonoBehaviour
         }
         if(inGame)
         {
-            if (gameTime > 0){gameTime-=Time.deltaTime;}
+            if (gameTime > 0 && !wormhole.activeInHierarchy){gameTime-=Time.deltaTime;}
             else{SpawnWormhole();}
             //Debug.Log((Vector3.zero-wormhole.transform.position).magnitude);
             if( (Vector3.zero-wormhole.transform.position).magnitude < 50  )

@@ -6,7 +6,8 @@ public class Slideshow : MonoBehaviour
 {
     public float timer = 0.0f;
     public float slideTime = 1;
-    public int slide = 0;    
+    public int slide = 0;
+    public bool autoEnd = true;    
     void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -33,7 +34,7 @@ public class Slideshow : MonoBehaviour
         }
         else
         {
-            SendMessageUpwards("SlideshowFinished");
+            if(autoEnd)SendMessageUpwards("SlideshowFinished");
         }
     }
 }

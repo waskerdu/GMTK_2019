@@ -6,6 +6,6 @@ public class Wormhole : MonoBehaviour
 {
     void Awake()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.left * 10;
+        GetComponent<Rigidbody2D>().velocity = Vector2.left * 2;
     }
 }

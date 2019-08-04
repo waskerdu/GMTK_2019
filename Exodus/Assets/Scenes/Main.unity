@@ -1514,6 +1514,7 @@ MonoBehaviour:
   timer: 0
   slideTime: 5
   slide: 0
+  autoEnd: 1
 --- !u!114 &427449102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8337,6 +8338,7 @@ MonoBehaviour:
   timer: 0
   slideTime: 8
   slide: 0
+  autoEnd: 0
 --- !u!1 &774946916
 GameObject:
   m_ObjectHideFlags: 0
@@ -10281,6 +10283,7 @@ MonoBehaviour:
   timer: 0
   slideTime: 8
   slide: 0
+  autoEnd: 0
 --- !u!114 &1529161963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10457,6 +10460,7 @@ MonoBehaviour:
   timer: 0
   slideTime: 10
   slide: 0
+  autoEnd: 1
 --- !u!1 &1549901301
 GameObject:
   m_ObjectHideFlags: 0
@@ -10973,14 +10977,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 701416249770203389}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702937400}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1740743370
 GameObject:
   m_ObjectHideFlags: 0
