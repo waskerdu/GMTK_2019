@@ -84,26 +84,10 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
         List<int> biomeTesting = new List<int>();
 
-        biomeTesting.Add(0);
-        biomeTesting.Add(1);
-        biomeTesting.Add(2);
-        biomeTesting.Add(3);
-        biomeTesting.Add(0);
-        biomeTesting.Add(1);
-        biomeTesting.Add(2);
-        biomeTesting.Add(3);
-        biomeTesting.Add(0);
-        biomeTesting.Add(1);
-        biomeTesting.Add(2);
-        biomeTesting.Add(3);
-        biomeTesting.Add(0);
-        biomeTesting.Add(1);
-        biomeTesting.Add(2);
-        biomeTesting.Add(3);
-        biomeTesting.Add(0);
-        biomeTesting.Add(1);
-        biomeTesting.Add(2);
-        biomeTesting.Add(3);
+        for (int i = 0; i < 20; i++)
+        {
+            biomeTesting.Add(i % 4);
+        }
 
         SetBiomeData(biomeTesting.ToArray());
     }
@@ -124,18 +108,6 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         {
             int biomeIndex = Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1));
             turretPositions[i].biome = biomeList[biomeIndex];
-            //GameObject biomeSprite = Instantiate(biomeBlockPrefab, planet.transform);
-            //biomeSprite.transform.eulerAngles = new Vector3(0, 0, -360f / (biomeList.Count) * biomeIndex);
-            //biomeSprite.transform.localPosition = new Vector3(0, 0, 0);
-            //biomeSprite.GetComponentInChildren<SpriteRenderer>().color = biomeTempColors[(int)biomeList[biomeIndex]];
-
-            /*
-            Transform biome = worldBiomes.GetChild(biomeIndex);
-            for (int j = 0; j < 4; j++)
-            {
-                biome.GetChild(j).gameObject.SetActive(j == (int)biomeList[biomeIndex]);
-            }
-            */
         }
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
         worldBiomes.parent = planet.transform;
