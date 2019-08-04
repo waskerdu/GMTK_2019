@@ -159,6 +159,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         List<TurretPosition> positions = pos.GetLeftmostPositionWithTurret(spokes - 1).GetTurrets(spokes - 1);
         foreach (TurretPosition position in positions)
             position.SetTurretType(positions.Count);
+
+        TurretSoundManager.Instance.PlaySound("TurretBuild", true);
     }
 
     public TurretPosition GetTopPosition()
@@ -194,6 +196,8 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
             foreach (TurretPosition position in positions)
                 position.SetTurretType(positions.Count);
         }
+
+        TurretSoundManager.Instance.PlaySound("TurretDismantle", true);
     }
 
     public void SetBiomeData(int[] biomes)
