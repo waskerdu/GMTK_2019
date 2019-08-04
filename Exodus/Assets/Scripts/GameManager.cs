@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject planetExplosion;
     public GameObject enemyManager;
     public GameObject wormhole;
+    public AudioClip planetExplosionSound;
+    [Range(0,1)] public float planetExplosionSoundVolume = 1;
     public int difficulty = 0;
     public bool inGame = false;
     public bool gameOver = false;
@@ -102,8 +104,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale=1.0f;
         planet.SetActive(true);
         wormhole.SetActive(false);
-        enemyManager.SetActive(true);
+        
         turretManager.SetActive(true);
+        enemyManager.SetActive(true);
         enemyManager.SendMessage("SetDifficulty",difficulty);
         turretManager.SendMessage("SetDifficulty",difficulty);
         HideMenus();
@@ -139,6 +142,7 @@ public class GameManager : MonoBehaviour
         enemyManager.SendMessage("GameWon");
         planet.SetActive(false);
         planetExplosion.SetActive(true);
+        AudioSource.PlayClipAtPoint(planetExplosionSound, Vector3.zero, planetExplosionSoundVolume );
         inGame = false;
         gameOver = true;
         SelectMenu(5);
