@@ -67,7 +67,7 @@ public class Player : MonoBehaviour, IPlayerMessages
     // Update is called once per frame
     void Update()
     {
-        planetRb.angularVelocity = Input.GetAxisRaw("Horizontal")*spinSpeed*Time.deltaTime;
+        planetRb.angularVelocity = Input.GetAxisRaw("Horizontal")*spinSpeed;
         if(integrity < 0){gameManager.SendMessage("GameOver");}
         if(Input.GetButtonDown("Jump")){playerRb.velocity=Vector2.up*jumpPower;}
         if(Input.GetButtonDown("Fire1"))
