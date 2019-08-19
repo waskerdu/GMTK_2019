@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
             biomes.Add(tempBiomes[i]);
             tempBiomes.RemoveAt(i);
         }
-        turretManager.SendMessage("SetBiomeData",biomes);
+        turretManager.SendMessage("SetBiomeData",biomes.ToArray());
     }
 
     void LaunchGame()
@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
         if(difficulty == 0){gameDuration *= 0.6f;}
         
         turretManager.SetActive(true);
+        GenerateBiomes();
         enemyManager.SetActive(true);
         enemyManager.SendMessage("SetDifficulty",difficulty);
         turretManager.SendMessage("SetDifficulty",difficulty);

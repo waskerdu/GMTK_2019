@@ -89,18 +89,19 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
             biomeTesting.Add(i % 4);
         }
 
-        SetBiomeData(biomeTesting.ToArray());
+        //SetBiomeData(biomeTesting.ToArray());
     }
 
     private void Start()
     {
-        bool hasPlacedSolar = false;
+        /* bool hasPlacedSolar = false;
 
         //Set biome data after we receive the biomes
         for (int i = 0; i < biomeList.Count; i++)
         {
             //instantiate mask
             //rotate it by 360f / biomeList.Count * i
+            Debug.Log(biomeList[i]);
             Biome biome = biomeList[i];
             Transform maskTransform = Instantiate(biomeMasks[(int)biome], worldBiomes);
             maskTransform.localEulerAngles = new Vector3(0, 0, -360f / biomeList.Count * i);
@@ -119,6 +120,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         }
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
         worldBiomes.parent = planet.transform;
+        /* */
 
         //
     }
@@ -203,9 +205,38 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public void SetBiomeData(int[] biomes)
     {
+        //biomeList.Clear();
         biomeList = new List<Biome>();
         foreach (int biome in biomes)
             biomeList.Add((Biome)biome);
+
+        bool hasPlacedSolar = false;
+
+        //Set biome data after we receive the biomes
+        //Debug.Log(biomeList.ToString());
+        for (int i = 0; i < biomeList.Count; i++)
+        {
+            //instantiate mask
+            //rotate it by 360f / biomeList.Count * i
+            Debug.Log(biomeList[i]);
+            Biome biome = biomeList[i];
+            Transform maskTransform = Instantiate(biomeMasks[(int)biome], worldBiomes);
+            maskTransform.localEulerAngles = new Vector3(0, 0, -360f / biomeList.Count * i);
+        }
+
+        for (int i = 0; i < turretPositions.Count; i++)
+        {
+            int biomeIndex = Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1));
+            turretPositions[i].biome = biomeList[biomeIndex];
+
+            if (!hasPlacedSolar && biomeList[biomeIndex] == Biome.Desert)
+            {
+                hasPlacedSolar = true;
+                PlaceTurret(turretPositions[i]);
+            }
+        }
+        rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
+        worldBiomes.parent = planet.transform;
     }
 
     public void GameOver()
