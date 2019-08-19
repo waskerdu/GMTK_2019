@@ -152,6 +152,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         newTurret.gameObject.name = "New Turret";
         newTurret.SetTurretType(Turret.TurretType.Basic);
         newTurret.myPosition = pos;
+        newTurret.transform.localScale*=2.0f;
 
         pos.turrets.Add(newTurret);
         ghostTurretInstance.gameObject.SetActive(false);
