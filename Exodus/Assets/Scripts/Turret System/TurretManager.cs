@@ -182,6 +182,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
 
     public void RemoveTurret(TurretPosition pos)
     {
+        if (pos.turrets.Count > 0) { MessageTutorial.Send("remove"); }
         foreach (Turret turret in pos.turrets)
             Destroy(turret.gameObject);
 
@@ -210,7 +211,7 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
         foreach (int biome in biomes)
             biomeList.Add((Biome)biome);
 
-        bool hasPlacedSolar = false;
+        //bool hasPlacedSolar = false;
 
         //Set biome data after we receive the biomes
         //Debug.Log(biomeList.ToString());
@@ -229,11 +230,11 @@ public class TurretManager : MonoBehaviour, ITurretManagerMessages
             int biomeIndex = Mathf.RoundToInt(Utilities.Map(i, 0, spokes - 1, 0, biomeList.Count - 1));
             turretPositions[i].biome = biomeList[biomeIndex];
 
-            if (!hasPlacedSolar && biomeList[biomeIndex] == Biome.Desert)
+            /*if (!hasPlacedSolar && biomeList[biomeIndex] == Biome.Desert)
             {
                 hasPlacedSolar = true;
                 PlaceTurret(turretPositions[i]);
-            }
+            }*/
         }
         rb = planet.transform.GetChild(0).GetComponent<Rigidbody2D>();
         worldBiomes.parent = planet.transform;
@@ -281,24 +282,35 @@ public class TurretPosition
                     {
                         case TurretManager.Biome.Forest:
                             turrets[i].SetTurretType(Turret.TurretType.Basic);
+                            MessageTutorial.Send("turret");
                             break;
 
                         case TurretManager.Biome.Desert:
                             turrets[i].SetTurretType(Turret.TurretType.Solar);
+                            MessageTutorial.Send("panel");
                             break;
 
                         case TurretManager.Biome.Ocean:
                             turrets[i].SetTurretType(Turret.TurretType.Oil);
+                            MessageTutorial.Send("drill");
                             break;
 
                         case TurretManager.Biome.Mountain:
                             turrets[i].SetTurretType(Turret.TurretType.Rocket);
+                            MessageTutorial.Send("rocket");
                             break;
                     }
                 else if (chainQuantity == 2)
+                {
                     turrets[i].SetTurretType(Turret.TurretType.Shield);
+                    MessageTutorial.Send("shield");
+                }
                 else
+                {
                     turrets[i].SetTurretType(Turret.TurretType.Laser);
+                    MessageTutorial.Send("laser");
+                }
+                
             }
         }
     }

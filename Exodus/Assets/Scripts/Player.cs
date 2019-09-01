@@ -69,7 +69,11 @@ public class Player : MonoBehaviour, IPlayerMessages
     {
         planetRb.angularVelocity = Input.GetAxisRaw("Horizontal")*spinSpeed;
         if(integrity < 0){gameManager.SendMessage("GameOver");}
-        if(Input.GetButtonDown("Jump")){playerRb.velocity=Vector2.up*jumpPower;}
+        if(Input.GetButtonDown("Jump"))
+        {
+            playerRb.velocity=Vector2.up*jumpPower;
+            MessageTutorial.Send("jetpack");
+        }
         if(Input.GetButtonDown("Fire1"))
         {
             place = true;
@@ -97,10 +101,15 @@ public class Player : MonoBehaviour, IPlayerMessages
                         if (material>=1.0f)
                         {
                             turretSystem.SendMessage("PlaceTurret");
+                            MessageTutorial.Send("place");
                             AddResources(-1);
                         }
                     }
-                    else{turretSystem.SendMessage("RemoveTurret");}
+                    else
+                    {
+                        turretSystem.SendMessage("RemoveTurret");
+                        if (MessageTutorial.InTutorial()) { AddResources(1); }
+                    }
                     turretSystem.SendMessage("ShowGhostTurret",false);
                     timer = 0.0f;
                     ready = false;

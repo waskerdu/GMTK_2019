@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public AudioSource audioSource;
     public GameObject face;
     public Sprite[] faceSprites;
+    public GameObject tutorialText;
     public int currentSong = 0;
     [Range(0,1)] public float planetExplosionSoundVolume = 1;
     public int difficulty = 0;
@@ -28,10 +30,18 @@ public class GameManager : MonoBehaviour
     public float gameDuration = 300.0f;
     public float playerHealth = 1.0f;
     public float healthThreshold = 0.3f;
+    public bool inTutorial = false;
     void Start()
     {
         //Time.timeScale = 0.0f;
         //mainMenu.SetActive(true);
+        inTutorial = (PlayerPrefs.GetInt("IsReplaying", 0) == 0);
+        if (inTutorial)
+        {
+            tutorialText.transform.parent.gameObject.SetActive(false);
+        }
+        PlayerPrefs.SetInt("IsReplaying", 1);
+
         SelectMenu(0);
         if(skipMenu)LaunchGame();
         audioSource = GetComponent<AudioSource>();
@@ -95,6 +105,22 @@ public class GameManager : MonoBehaviour
     public void GiveUp(){SceneManager.LoadScene( SceneManager.GetActiveScene().name );}
     //public void Resume(){pauseMenu.SetActive(false);Time.timeScale=1.0f;}
     public void Resume(){HideMenus();Time.timeScale=1.0f;}
+    public void Tutorial()
+    {
+        inTutorial = !inTutorial;
+        if (inTutorial)
+        {
+            tutorialText.GetComponent<TextMeshProUGUI>().text = "Replay Tutorial!";
+        }
+        else tutorialText.GetComponent<TextMeshProUGUI>().text = "Replay Tutorial?";
+    }
+
+    public void TutorialOver()
+    {
+        inTutorial = false;
+        enemyManager.SetActive(true);
+        enemyManager.SendMessage("SetDifficulty",difficulty);
+    }
 
     public void GenerateBiomes()
     {
@@ -105,6 +131,15 @@ public class GameManager : MonoBehaviour
         int i;
         List<int> tempBiomes = new List<int>();
         List<int> biomes = new List<int>();
+        if (inTutorial)
+        {
+            for (i = 0; i < 20; i++)
+            {
+                biomes.Add( i % 4);
+            }
+            turretManager.SendMessage("SetBiomeData", biomes.ToArray());
+            return;
+        }
         for (i = 0; i < numForests; i++)
         {
             tempBiomes.Add(0);
@@ -140,8 +175,11 @@ public class GameManager : MonoBehaviour
         
         turretManager.SetActive(true);
         GenerateBiomes();
-        enemyManager.SetActive(true);
-        enemyManager.SendMessage("SetDifficulty",difficulty);
+        if (!inTutorial)
+        {
+            enemyManager.SetActive(true);
+            enemyManager.SendMessage("SetDifficulty",difficulty);
+        }
         turretManager.SendMessage("SetDifficulty",difficulty);
         HideMenus();
         gameTime = gameDuration;
@@ -221,7 +259,8 @@ public class GameManager : MonoBehaviour
         }
         if(inGame)
         {
-            if (gameTime > 0 && !wormhole.activeInHierarchy){gameTime-=Time.deltaTime;}
+            if (inTutorial) { }
+            else if (gameTime > 0 && !wormhole.activeInHierarchy){gameTime-=Time.deltaTime;}
             else{SpawnWormhole();}
             //Debug.Log((Vector3.zero-wormhole.transform.position).magnitude);
             if( (Vector3.zero-wormhole.transform.position).magnitude < 50  )
