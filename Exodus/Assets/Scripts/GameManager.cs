@@ -249,12 +249,18 @@ public class GameManager : MonoBehaviour
                 //pauseMenu.SetActive(false);
                 HideMenus();
                 Time.timeScale=1.0f;
+                audioSource.Stop();
+                audioSource.clip = music[currentSong];
+                audioSource.Play();
             }
             else
             {
                 //pauseMenu.SetActive(true);
                 SelectMenu(1);
                 Time.timeScale=0.0f;
+                audioSource.Stop();
+                audioSource.clip = music[7];
+                audioSource.Play();
             }
         }
         if(inGame)
