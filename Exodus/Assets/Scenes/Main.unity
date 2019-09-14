@@ -9029,6 +9029,7 @@ MonoBehaviour:
   planetExplosion: {fileID: 1702937400}
   enemyManager: {fileID: 2030287815}
   wormhole: {fileID: 1221486796}
+  tutorialManager: {fileID: 1560246173}
   planetExplosionSound: {fileID: 8300000, guid: c692f5e9b0f3a344299d002d0ad8a047,
     type: 3}
   music:
@@ -12050,7 +12051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1560246174
 Transform:
   m_ObjectHideFlags: 0

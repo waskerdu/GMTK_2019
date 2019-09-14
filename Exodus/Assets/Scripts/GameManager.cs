@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject planetExplosion;
     public GameObject enemyManager;
     public GameObject wormhole;
+    public GameObject tutorialManager;
     public AudioClip planetExplosionSound;
     public AudioClip[] music;
     public AudioSource audioSource;
@@ -179,6 +180,10 @@ public class GameManager : MonoBehaviour
         {
             enemyManager.SetActive(true);
             enemyManager.SendMessage("SetDifficulty",difficulty);
+        }
+        else
+        {
+            tutorialManager.SetActive(true);
         }
         turretManager.SendMessage("SetDifficulty",difficulty);
         HideMenus();
